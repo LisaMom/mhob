@@ -90,120 +90,154 @@ function _linksHTML(mobile = false) {
 }
 
 const _css = `
-  /* ── Navbar extras — only things NOT in style.css ── */
+  /* ── Win2K Navbar extras ── */
 
-  /* Profile button */
+  /* Profile button — Win2K raised panel */
   .nav-profile-wrap  { position: relative; }
   .nav-profile-btn   {
-    display: flex; align-items: center; gap: 6px;
-    padding: 4px 10px 4px 4px; border-radius: 50px;
-    border: 1.5px solid #e8e8e8; background: white; cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    font-family: 'Suwannaphum', serif;
+    display: flex; align-items: center; gap: 4px;
+    padding: 2px 8px 2px 3px; border-radius: 0;
+    border: none;
+    background: linear-gradient(180deg, #4080d0 0%, #1850b0 100%);
+    cursor: pointer; transition: none;
+    font-family: 'Tahoma', sans-serif;
+    box-shadow: inset 1px 1px 0 rgba(255,255,255,0.3), inset -1px -1px 0 rgba(0,0,0,0.3);
+    min-height: 22px;
   }
-  .nav-profile-btn:hover    { border-color: var(--green-main); box-shadow: 0 2px 12px rgba(61,122,53,0.15); }
-  .nav-profile-name         { font-size: 1.125rem; font-weight: 600; color: var(--text-dark); max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .nav-profile-chevron      { font-size: 1.125rem; color: var(--text-light); transition: transform 0.22s; }
-  .nav-profile-btn.open .nav-profile-chevron { transform: rotate(180deg); }
+  .nav-profile-btn:hover    {
+    background: linear-gradient(180deg, #5090e0 0%, #2060c0 100%);
+    outline: 1px dotted rgba(255,255,255,0.5); outline-offset: -2px;
+  }
+  .nav-profile-name         { font-size: 11px; font-weight: 700; color: white; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .nav-profile-chevron      { font-size: 9px; color: rgba(255,255,255,0.8); transition: none; }
+  .nav-profile-btn.open .nav-profile-chevron { transform: none; }
 
-  /* Dropdown */
+  /* Dropdown — Win2K context menu style */
   .nav-dropdown {
-    position: absolute; top: calc(100% + 8px); right: 0;
-    background: white; border-radius: 14px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.13); border: 1px solid #f0f0f0;
-    min-width: 190px; z-index: 9999; overflow: hidden;
-    opacity: 0; pointer-events: none; transform: translateY(-6px);
-    transition: opacity 0.18s, transform 0.18s;
+    position: absolute; top: calc(100% + 2px); right: 0;
+    background: #d4d0c8; border-radius: 0;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4),
+      inset 1px 1px 0 #ffffff, inset -1px -1px 0 #404040,
+      inset 2px 2px 0 #d4d0c8, inset -2px -2px 0 #808080;
+    border: none;
+    min-width: 180px; z-index: 9999; overflow: hidden;
+    opacity: 0; pointer-events: none; transform: translateY(-2px);
+    transition: opacity 0.08s, transform 0.08s;
   }
   .nav-dropdown.open { opacity: 1; pointer-events: all; transform: translateY(0); }
 
   .nav-dropdown-header {
-    padding: 12px 16px; display: flex; align-items: center; gap: 10px;
-    border-bottom: 1px solid #f5f5f5;
+    padding: 6px 10px; display: flex; align-items: center; gap: 8px;
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    border-bottom: 1px solid #404040;
   }
-  .nav-dropdown-name  { font-size: 1.125rem; font-weight: 700; color: var(--text-dark); }
-  .nav-dropdown-email { font-size: 1.125rem; color: var(--text-light); margin-top: 1px; }
-  .nav-dropdown-divider { height: 1px; background: #f5f5f5; margin: 3px 0; }
+  .nav-dropdown-name  { font-size: 11px; font-weight: 700; color: white; font-family: 'Tahoma', sans-serif; }
+  .nav-dropdown-email { font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 1px; font-family: 'Tahoma', sans-serif; }
+  .nav-dropdown-divider { height: 1px; background: #808080; margin: 2px 0; box-shadow: 0 1px 0 #ffffff; }
   .nav-dropdown-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 11px 16px; font-size: 1.25rem; color: var(--text-dark);
-    text-decoration: none; transition: background 0.15s;
-    font-family: 'Suwannaphum', serif; cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 12px; font-size: 11px; color: #000000;
+    text-decoration: none; transition: none;
+    font-family: 'Tahoma', sans-serif; cursor: pointer;
     background: none; border: none; width: 100%; text-align: left;
   }
-  .nav-dropdown-item i { width: 14px; color: var(--green-main); }
-  .nav-dropdown-item:hover { background: #f5faf4; }
-  .nav-dropdown-logout { color: #ef4444; }
-  .nav-dropdown-logout i { color: #ef4444; }
-  .nav-dropdown-logout:hover { background: #fff5f5; }
+  .nav-dropdown-item i { width: 14px; color: #008080; }
+  .nav-dropdown-item:hover { background: #000080; color: white; text-decoration: none; }
+  .nav-dropdown-item:hover i { color: white; }
+  .nav-dropdown-logout { color: #800000; }
+  .nav-dropdown-logout i { color: #800000; }
+  .nav-dropdown-logout:hover { background: #000080; color: white; }
 
-  /* Search bar */
+  /* Search bar — Win2K address bar */
   .nav-search-bar {
-    display: none; background: white; border-top: 1px solid #f0f0f0; padding: 10px 24px;
+    display: none;
+    background: #d4d0c8;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #ffffff;
+    padding: 4px 8px;
   }
   .nav-search-bar.open { display: block; }
   .nav-search-inner {
-    max-width: 600px; margin: 0 auto; display: flex; align-items: center; gap: 10px;
-    background: #f5f5f5; border-radius: 50px; padding: 8px 16px;
+    max-width: 600px; margin: 0 auto; display: flex; align-items: center; gap: 6px;
+    background: white;
+    box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #ffffff, inset 2px 2px 0 #808080, inset -2px -2px 0 #d4d0c8;
+    padding: 2px 8px;
+    border: none;
   }
-  .nav-search-inner i { color: #aaa; font-size: 1.25rem; flex-shrink: 0; }
+  .nav-search-inner i { color: #808080; font-size: 11px; flex-shrink: 0; }
   .nav-search-inner input {
     flex: 1; border: none; background: transparent; outline: none;
-    font-family: 'Suwannaphum', serif; font-size: 1.25rem; color: var(--text-dark);
+    font-family: 'Tahoma', 'Suwannaphum', sans-serif; font-size: 11px; color: #000;
   }
-  .nav-search-inner input::placeholder { color: #bbb; }
+  .nav-search-inner input::placeholder { color: #888; }
   .nav-search-close {
-    background: none; border: none; cursor: pointer; color: #aaa; padding: 0;
-    font-size: 1.25rem; line-height: 1; flex-shrink: 0;
+    background: #d4d0c8;
+    border: none;
+    box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #404040, inset 2px 2px 0 #d4d0c8, inset -2px -2px 0 #808080;
+    cursor: pointer; color: #000; padding: 1px 6px;
+    font-size: 10px; line-height: 1; flex-shrink: 0;
+    font-family: 'Tahoma', sans-serif; min-height: 18px;
   }
-  .nav-search-close:hover { color: var(--green-main); }
+  .nav-search-close:hover { outline: 1px dotted #000; outline-offset: -2px; }
 
-  /* Mobile menu */
+  /* Mobile menu — Win2K Start menu style */
   .nav-mobile-menu {
     display: none; flex-direction: column;
-    background: white; border-top: 1px solid #f0f0f0; padding: 12px 16px 20px;
+    background: #d4d0c8;
+    border: none;
+    border-bottom: 2px solid #404040;
+    box-shadow: inset -1px 0 0 #ffffff;
+    padding: 4px 4px 8px;
   }
   .nav-mobile-menu.open { display: flex; }
   .nav-mobile-link {
-    padding: 11px 12px; font-size: 1.25rem; color: var(--text-dark);
-    text-decoration: none; border-radius: var(--radius-sm);
-    transition: background 0.15s; font-family: 'Suwannaphum', serif;
+    padding: 4px 10px; font-size: 12px; color: #000000;
+    text-decoration: none; border-radius: 0;
+    transition: none; font-family: 'Suwannaphum', 'Tahoma', sans-serif;
   }
   .nav-mobile-link:hover, .nav-mobile-link.active {
-    background: var(--green-light); color: var(--green-main); font-weight: 700;
+    background: #000080; color: white; text-decoration: none;
   }
-  .nav-mobile-divider { height: 1px; background: #f0f0f0; margin: 8px 0; }
-  .nav-mobile-auth { display: flex; flex-direction: column; gap: 8px; padding: 4px 0; }
+  .nav-mobile-divider { height: 1px; background: #808080; margin: 4px 0; box-shadow: 0 1px 0 #ffffff; }
+  .nav-mobile-auth { display: flex; flex-direction: column; gap: 4px; padding: 2px 0; }
   .nav-mobile-auth-btn {
-    padding: 10px 14px; border-radius: var(--radius-sm);
-    font-family: 'Suwannaphum', serif; font-size: 1.125rem; font-weight: 600;
-    text-align: center; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s;
+    padding: 4px 10px; border-radius: 0;
+    font-family: 'Tahoma', sans-serif; font-size: 11px; font-weight: 400;
+    text-align: center; text-decoration: none; border: none; cursor: pointer; transition: none;
+    background: #d4d0c8;
+    box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #404040, inset 2px 2px 0 #d4d0c8, inset -2px -2px 0 #808080;
+    min-height: 22px; color: #000;
   }
-  .nav-mobile-auth-btn.outline { border: 1.5px solid var(--green-main); color: var(--green-main); background: white; }
-  .nav-mobile-auth-btn.filled  { background: var(--green-main); color: white; border: 1.5px solid var(--green-main); }
-  .nav-mobile-auth-btn:hover   { opacity: 0.85; }
+  .nav-mobile-auth-btn.outline { background: #d4d0c8; color: #000; }
+  .nav-mobile-auth-btn.filled  { background: #000080; color: white; box-shadow: none; border: 1px solid #000040; }
+  .nav-mobile-auth-btn:hover   { outline: 1px dotted #000; outline-offset: -2px; }
   /* Mobile profile row */
   .nav-mobile-profile {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 12px; border-radius: var(--radius-sm); background: var(--green-light);
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 8px; border-radius: 0;
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    text-decoration: none;
   }
   .nav-mobile-profile-info { flex: 1; min-width: 0; }
-  .nav-mobile-profile-name  { font-size: 1.125rem; font-weight: 700; color: var(--text-dark); }
-  .nav-mobile-profile-email { font-size: 1.125rem; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nav-mobile-profile-name  { font-size: 11px; font-weight: 700; color: white; font-family: 'Tahoma', sans-serif; }
+  .nav-mobile-profile-email { font-size: 10px; color: rgba(255,255,255,0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Tahoma', sans-serif; }
   .nav-mobile-logout {
-    background: none; border: 1.5px solid #f0f0f0; padding: 10px 14px;
-    border-radius: var(--radius-sm); font-family: 'Suwannaphum', serif;
-    font-size: 1.125rem; color: #ef4444; cursor: pointer; text-align: center; transition: all 0.2s;
+    background: #d4d0c8; border: none;
+    box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #404040, inset 2px 2px 0 #d4d0c8, inset -2px -2px 0 #808080;
+    padding: 4px 10px;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 11px; color: #800000; cursor: pointer; text-align: center; transition: none;
+    min-height: 22px;
   }
-  .nav-mobile-logout:hover { background: #fff5f5; border-color: #fecaca; }
+  .nav-mobile-logout:hover { outline: 1px dotted #800000; outline-offset: -2px; }
 
   /* Active nav-text link */
-  .nav-text.active { color: var(--green-main); font-weight: 700; }
+  .nav-text.active { background: rgba(0,0,128,0.5) !important; color: white !important; }
 
   /* Hamburger animation */
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
   .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
 
   /* Responsive — hide desktop links on mobile */
   @media (max-width: 768px) {
@@ -222,13 +256,11 @@ const _html = `
   <nav class="navbar" id="navbar">
     <div class="nav-container">
 
-      <!-- Logo — uses .nav-logo from style.css -->
-      <a href="${LOGO.href}" class="nav-logo">
-        <img src="${LOGO.img}" alt="${LOGO.text}"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="logo-placeholder" style="display:none;">
-          <span class="logo-icon">${LOGO.icon}</span>
-          <span style="font-family:'Moul',serif;font-size:1.25rem;color:var(--green-dark);">${LOGO.text}</span>
+      <!-- Win2K Start button + Logo -->
+      <a href="${LOGO.href}" class="nav-logo" style="text-decoration:none;display:flex;align-items:center;gap:0;">
+        <div style="background:linear-gradient(180deg,#4caf50 0%,#2e7d32 100%);color:white;font-family:'Tahoma',sans-serif;font-weight:900;font-size:12px;padding:2px 10px 2px 6px;display:flex;align-items:center;gap:5px;min-height:26px;box-shadow:inset 1px 1px 0 rgba(255,255,255,0.3),inset -1px -1px 0 rgba(0,0,0,0.3);letter-spacing:0.5px;border-right:1px solid #1b5e20;">
+          <img src="${LOGO.img}" alt="${LOGO.text}" style="height:18px;object-fit:contain;" onerror="this.style.display='none'"/>
+          <span style="font-style:italic;">ម្ហូប</span>
         </div>
       </a>
 

@@ -1105,7 +1105,7 @@
               // 422 = validation error, try next payload shape
               if (res.status === 422) continue;
 
-              break outer; // other 4xx = surface the error
+              break outer; 
             }
           } catch (networkErr) {
             lastErrMsg = networkErr.message;

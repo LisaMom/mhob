@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mhob | Discover Cambodian Food & Recipes</title>
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="shortcut icon" href="/src/assets/logo.png" type="image/x-icon"/>
+
+    <meta name="description" content="ស្វែងយល់អំពីម្ហូបខ្មែរប្រពៃណី រស់ជាតិពិតប្រាកដ និងរូបមន្តដែលបានបន្តពីជំនាន់មួយទៅជំនាន់មួយ។"/>
+    <meta name="keywords" content="ម្ហូបខ្មែរ, អាហារខ្មែរ, រូបមន្តខ្មែរ, Khmer food, Cambodian cuisine"/>
+    <meta name="author" content="ម្ហូបខ្មែរ" />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mhob Khmer" />
+    <meta property="og:description" content="ស្វែងយល់អំពីម្ហូបខ្មែរប្រពៃណី រស់ជាតិពិតប្រាកដ និងរូបមន្តដែលបានបន្តពីជំនាន់មួយទៅជំនាន់មួយ។"/>
+    <meta property="og:url" content="https://yourdomain.com/" />
+    <meta property="og:image" content="/src/assets/image.png" />
+    <meta property="og:image:alt" content="Traditional Khmer food with fresh ingredients served in banana leaf" />
+    <meta property="og:locale" content="km_KH" />
+
+  </head>
+
+  <body>
+    <div id="navbar-root"></div>
+    <!-- HERO -->
+    <section class="hero">
+      <video autoplay muted loop playsinline class="hero-video">
+        <source src="/src/assets/video/background-video.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-overlay"></div>
+      <div class="hero-container">
+        <div class="hero-content">
+          <div
+            class="hero-badge"
+            style="background-color: rgba(255, 255, 0, 0.025)"
+          >
+            ជម្រើសយើងខ្ពស់ប្រចាំថ្ងៃ
+          </div>
+          <h1 class="hero-title">
+            <span style="color: yellow"> រសជាតិដើម</span>
+            <br />នៃអាហារខ្មែរយើង
+            <br />
+          </h1>
+          <p class="hero-subtitle">
+            ស្វែងយល់ពីរូបមន្តនៃការធ្វើម្ហូបខ្មែរដ៏ច្រើន ចាប់ពីមុខម្ហូប<br />
+            ព្រះរាជដ្ឋាន រហូតដល់ម្ហូបតាមដងផ្លូវ ដែលធ្វើអោយចិត្ត <br />
+            ស្រស់ស្រាយ
+          </p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-number" id="stat-foods"></div>
+            <div class="stat-label"></div>
+          </div>
+          <div class="stat">
+            <div class="stat-number" id="stat-rest"></div>
+            <div class="stat-label"></div>
+          </div>
+          <div class="stat">
+            <div class="stat-number"></div>
+            <div class="stat-label"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOD POSTS (user recipes) -->
+    <section class="categories-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">បញ្ជីរាយមុខម្ហូប</h2>
+          <div class="section-filters" id="diff-filters">
+            <button class="filter-btn active" onclick="filterPosts('', this)">
+              ទាំងអស់
+            </button>
+            <button class="filter-btn" onclick="filterPosts('easy', this)">
+              ងាយ
+            </button>
+            <button class="filter-btn" onclick="filterPosts('medium', this)">
+              មធ្យម
+            </button>
+            <button class="filter-btn" onclick="filterPosts('hard', this)">
+              លំបាក
+            </button>
+          </div>
+        </div>
+        <div class="food-grid" id="posts-grid">
+          <div class="skel" style="height: 220px"></div>
+          <div class="skel" style="height: 220px"></div>
+          <div class="skel" style="height: 220px"></div>
+          <div class="skel" style="height: 220px"></div>
+        </div>
+        <div class="see-more-wrap">
+          <a
+            href="/src/pages/Product_Page/product.html?tab=posts"
+            class="btn-see-more"
+          >
+            <i class="fa-solid fa-arrow-right"></i> មើលរូបមន្តទាំងអស់
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOD ITEMS -->
+    <section class="recommended-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">ម្ហូបដ៏ពេញនិយម</h2>
+          <div class="section-filters" id="cat-filters">
+            <button class="filter-btn active" onclick="filterFoods('', this)">
+              ទាំងអស់
+            </button>
+            <button class="filter-btn" onclick="filterFoods('food', this)">
+              ម្ហូប
+            </button>
+            <button class="filter-btn" onclick="filterFoods('drink', this)">
+              ភេសជ្ជៈ
+            </button>
+            <button class="filter-btn" onclick="filterFoods('dessert', this)">
+              បង្អែម
+            </button>
+            <button class="filter-btn" onclick="filterFoods('snack', this)">
+              សម្រន់
+            </button>
+          </div>
+        </div>
+        <div class="food-grid" id="foods-grid">
+          <div class="skel" style="height: 220px"></div>
+          <div class="skel" style="height: 220px"></div>
+          <div class="skel" style="height: 220px"></div>
+          <div class="skel" style="height: 220px"></div>
+        </div>
+        <div class="see-more-wrap">
+          <a
+            href="/src/pages/Product_Page/product.html?tab=food-items"
+            class="btn-see-more"
+          >
+            <i class="fa-solid fa-arrow-right"></i> មើលម្ហូបទាំងអស់
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESTAURANTS -->
+    <section class="recommended-section restaurant-section-dark">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title text-white">ភោជនីយដ្ឋានពេញនិយម</h2>
+        </div>
+        <div class="food-grid" id="rest-grid">
+          <div class="skel" style="height: 220px"></div>
+          <div class="skel" style="height: 220px"></div>
+          <div class="skel" style="height: 220px"></div>
+          <div class="skel" style="height: 220px"></div>
+        </div>
+        <div class="see-more-wrap">
+          <a
+            href="/src/pages/Product_Page/product.html?tab=restaurants"
+            class="btn-see-more btn-see-more-white"
+          >
+            <i class="fa-solid fa-arrow-right"></i> មើលភោជនីយដ្ឋានទាំងអស់
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about-section">
+      <div class="about-grid">
+        <div class="about-content">
+          <h2 class="about-title">អ្វីទៅជាម្ហូបខ្មែរ?</h2>
+          <p class="about-text">
+            ម្ហូបខ្មែរគឺជាផ្នែកសំខាន់មួយនៃវប្បធម៌
+            និងអត្តសញ្ញាណរបស់ប្រទេសកម្ពុជា។
+            វាបង្ហាញពីប្រវត្តិសាស្ត្រ និងប្រពៃណីរបស់ប្រជាជនខ្មែរ
+            តាមរយៈការប្រើប្រាស់
+            គ្រឿងផ្សំធម្មជាតិដូចជា បន្លែ ត្រី សាច់ និងគ្រឿងទេស។
+          </p>
+        </div>
+        <div class="about-images">
+          <div class="about-img-big">
+            <img src="./src/assets/home-img/សម្ល.jpg" alt="soup" />
+          </div>
+          <div class="about-img-small">
+            <img src="./src/assets/home-img/បង្អែម.jpg" alt="dessert" />
+          </div>
+          <div class="about-img-small">
+            <img src="./src/assets/home-img/គុយទាវ.jpg" alt="soup" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section class="why-section" style="margin-bottom: 50px">
+      <div class="why-grid">
+        <div class="why-img">
+          <img
+            src="./src/assets/home-img/ប្រហិកអាំងជ្រុញ.jpg"
+            alt="whychoosemhob"
+          />
+        </div>
+        <div class="why-content">
+          <h2 class="why-title">ហេតុអ្វីបានជាជ្រើសរើស ម្ហូប?</h2>
+          <div class="why-list">
+            <div class="why-item">
+              <div class="why-num">1</div>
+              <div class="why-item-text">រូបមន្តខ្មែរពិតប្រាកដ</div>
+            </div>
+            <div class="why-item">
+              <div class="why-num">2</div>
+              <div class="why-item-text">ឆ្ងុយឆ្ងាញ់ ងាយស្រួលធ្វើ</div>
+            </div>
+            <div class="why-item">
+              <div class="why-num">3</div>
+              <div class="why-item-text">ចែករំលែករូបមន្តដោយឥតគិតថ្លៃ</div>
+            </div>
+            <div class="why-item">
+              <div class="why-num">4</div>
+              <div class="why-item-text">ប្រព័ន្ធពិនិត្យ និងណែនាំ</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="footer-root"></div>
+
+    <script src="/src/services/api.js"></script>
+    <script src="/src/components/Navbar.js"></script>
+    <script src="/src/components/Footer.js"></script>
+
+    <script>
+      const FOOD_FB = [
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80",
+        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80",
+        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&q=80",
+      ];
+      const REST_FB = [
+        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=80",
+        "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&q=80",
+      ];
+
+      function _img(url, fb) {
+        return !url ||
+          url === "string" ||
+          url === "null" ||
+          url.includes("example.com")
+          ? fb[Math.floor(Math.random() * fb.length)]
+          : url;
+      }
+      function _stars(r) {
+        const f = Math.round(r || 0);
+        return (
+          '<i class="bi bi-star-fill" style="color:#f59e0b; font-size:1.125rem;"></i>'.repeat(
+            Math.min(5, f),
+          ) +
+          '<i class="bi bi-star-fill" style="color:#ddd; opacity:0.3; font-size:1.125rem;"></i>'.repeat(
+            Math.max(0, 5 - f),
+          )
+        );
+      }
+      function _trunc(s, n) {
+        s = s || "";
+        return s.length > n ? s.slice(0, n) + "…" : s;
+      }
+
+      let _allPosts = [],
+        _allFoods = [],
+        _allRests = [];
+
+      /* ── Post card ── */
+      function postCard(p) {
+        const img = _img(p.image_url, FOOD_FB),
+          url = `/src/pages/Product_details/detail.html?type=post&id=${p.id}`;
+        const dc = {
+          easy: "var(--green-main)",
+          medium: "var(--gold)",
+          hard: "#ef4444",
+        };
+        const dl = { easy: "ងាយ", medium: "មធ្យម", hard: "លំបាក" },
+          d = p.difficulty_level || "";
+        return `<div class="food-card" onclick="location.href='${url}'" style="cursor:pointer;">
+      <div class="food-card-img" style="position:relative;overflow:hidden;">
+        <img src="${img}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.src='${FOOD_FB[0]}'"/>
+        ${d ? `<span class="diff-badge" style="background:${dc[d]};top:8px;left:8px;right:auto;">${dl[d]}</span>` : ""}
+        ${(p.tags || []).length ? `<span style="display:none;position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.5);color:white;font-size:0.6rem;padding:2px 7px;border-radius:20px;">${p.tags[0]}</span>` : ""}
+      </div>
+      <div class="food-card-body">
+        <div class="food-card-title">${p.title || "—"}</div>
+        <div class="food-card-desc">${_trunc(p.description, 68)}</div>
+        <div class="food-card-footer">
+          <span class="food-card-views"><i class="fa-regular fa-heart" style="color:#ef4444;font-size:1.25rem;"></i> ${p.likes_count || 0}${p.cooking_time_minutes ? ` · ${p.cooking_time_minutes}នាទី'` : ""}</span>
+        </div>
+      </div>
+    </div>`;
+      }
+
+      /* ── Food item card ── */
+      function foodItemCard(f) {
+        const img = _img(f.image_url, FOOD_FB),
+          url = `/src/pages/Product_details/detail.html?type=food&id=${f.id}`;
+        return `<div class="food-card" onclick="location.href='${url}'" style="cursor:pointer;">
+      <div class="food-card-img" style="position:relative;overflow:hidden;">
+        <img src="${img}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.src='${FOOD_FB[0]}'"/>
+        ${f.is_trending ? `<span class="trend-badge"><i class="bi bi-fire"></i> ពេញ</span>` : ""}
+        ${f.price ? `<span style="display:none;position:absolute;bottom:7px;right:7px;background:var(--green-main);color:white;font-size:1.125rem;font-weight:700;padding:2px 8px;border-radius:20px;"></span>` : ""}
+      </div>
+      <div class="food-card-body">
+        <div class="food-card-title">${f.name || "—"}</div>
+        <div class="food-card-desc">${_trunc(f.description, 68)}</div>
+        <div class="food-card-footer">
+          <span class="food-stars">${_stars(f.average_rating)}</span>
+        </div>
+      </div>
+    </div>`;
+      }
+
+      /* ── Restaurant card (dark style) ── */
+      function restCard(r) {
+        const img = _img(r.image_url, REST_FB),
+          url = `/src/pages/Product_details/detail.html?type=restaurant&id=${r.id}`;
+        const cuisine =
+          (r.cuisine_types || [])
+            .filter((c) => c && c !== "string")
+            .slice(0, 2)
+            .join(", ") || "ម្ហូប";
+        const price =
+          r.price_range && r.price_range !== "string" ? r.price_range : "";
+        return `<div class="restaurant-card" onclick="location.href='${url}' style="cursor:pointer; ">
+      <div style="position:relative;overflow:hidden;height:140px; ">
+        <img src="${img}" class="restaurant-card-img" onerror="this.src='${REST_FB[0]}'"/>
+        ${r.is_trending ? `<span class="trend-badge">ពេញ</span>` : ""}
+        ${price ? `<span style="display:none;position:absolute;bottom:7px;right:7px;background:var(--gold);color:white;font-size:1.125rem;font-weight:700;padding:2px 8px;border-radius:20px;"></span>` : ""}
+      </div>
+      <div class="food-card-body">
+        <div class="food-card-title" style="color:white;">${r.name || "—"}</div>
+        <div class="food-card-desc" style="color:rgba(255,255,255,0.6);">${cuisine}</div>
+      </div>
+    </div>`;
+      }
+
+      /* ── Filter functions ── */
+      function filterPosts(diff, btn) {
+        document
+          .querySelectorAll("#diff-filters .filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const items = diff
+          ? _allPosts.filter((p) => p.difficulty_level === diff)
+          : _allPosts;
+        renderSection("posts-grid", items.slice(0, 8), postCard);
+      }
+
+      function filterFoods(cat, btn) {
+        document
+          .querySelectorAll("#cat-filters .filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const items = cat
+          ? _allFoods.filter((f) => f.category === cat)
+          : _allFoods;
+        renderSection("foods-grid", items.slice(0, 8), foodItemCard);
+      }
+
+      function renderSection(id, items, builder) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.innerHTML = items.length
+          ? items.map(builder).join("")
+          : `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--text-light);"><i class="bi bi-archive" style="font-size:2.25rem; opacity:0.2; display:block; margin-bottom:10px;"></i> មិនទាន់មានទិន្នន័យ</div>`;
+      }
+
+      /* ── Search ── */
+      function goSearch() {
+        const q = document.getElementById("hero-q").value.trim();
+        if (q)
+          location.href = `/src/pages/Product_Page/product.html?q=${encodeURIComponent(q)}`;
+      }
+      document.getElementById("hero-q")?.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") goSearch();
+      });
+
+      /* ── Load all data ── */
+      async function loadAll() {
+        try {
+          // Parallel load
+          const posts = await FoodPostsAPI.list(0, 24).catch(() => []);
+          const foods = await FoodItemsAPI.list(0, 24).catch(() => []);
+          const rests = await RestaurantsAPI.list(0, 8).catch(() => []);
+
+          _allPosts = Array.isArray(posts) ? posts : [];
+          _allFoods = Array.isArray(foods) ? foods : [];
+          _allRests = Array.isArray(rests) ? rests : [];
+
+          // Render grids (8 cards each)
+          renderSection("posts-grid", _allPosts.slice(0, 8), postCard);
+          renderSection("foods-grid", _allFoods.slice(0, 8), foodItemCard);
+          renderSection("rest-grid", _allRests.slice(0, 8), restCard);
+        } catch (e) {
+          console.error("[loadAll]", e);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", loadAll);
+    </script>
+  </body>
+</html>

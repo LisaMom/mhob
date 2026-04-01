@@ -1,0 +1,1658 @@
+<!doctype html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Details — Mhob</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <meta name="description" content="ស្វែងយល់អំពីម្ហូបខ្មែរប្រពៃណី រស់ជាតិពិតប្រាកដ និងរូបមន្តដែលបានបន្តពីជំនាន់មួយទៅជំនាន់មួយ។"/>
+    <meta name="keywords" content="ម្ហូបខ្មែរ, អាហារខ្មែរ, រូបមន្តខ្មែរ, Khmer food, Cambodian cuisine"/>
+    <meta name="author" content="ម្ហូបខ្មែរ" />
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mhob Khmer" />
+    <meta property="og:description" content="ស្វែងយល់អំពីម្ហូបខ្មែរប្រពៃណី រស់ជាតិពិតប្រាកដ និងរូបមន្តដែលបានបន្តពីជំនាន់មួយទៅជំនាន់មួយ។"/>
+    <meta property="og:url" content="https://yourdomain.com/" />
+    <meta property="og:image" content="../../assets/image.png" />
+    <meta property="og:image:alt" content="Traditional Khmer food with fresh ingredients served in banana leaf" />
+    <meta property="og:locale" content="km_KH" />
+
+    <style>
+       :root {
+        --green:        #418d37;
+        --green-dark:   #2d5a27;
+        --green-light:  #f0fdf4;
+        --green-border: rgba(34,197,94,.18);
+        --ink:          #0f172a;
+        --ink-2:        #334155;
+        --ink-3:        #475569;
+        --muted:        #64748b;
+        --surface:      #ffffff;
+        --surface-2:    #f8fafc;
+        --border:       #e2e8f0;
+        --border-light: #f1f5f9;
+        --shadow-sm:    0 1px 3px rgba(15,23,42,.06), 0 4px 12px rgba(15,23,42,.06);
+        --shadow-md:    0 4px 16px rgba(15,23,42,.08), 0 12px 32px rgba(15,23,42,.06);
+        --radius-xs:    10px;
+        --radius-sm:    16px;
+        --radius-md:    20px;
+        --radius-lg:    24px;
+        --radius-xl:    28px;
+        --radius-full:  999px;
+      }
+
+       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background: #f4f6f9;
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.6;
+       font-family: 'Suwannaphum', serif;
+      }
+      a { text-decoration: none; color: inherit; }
+      button { font-family: inherit; cursor: pointer; }
+      img { display: block; max-width: 100%; }
+
+       .detail-page {
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 40px 20px 64px;
+      }
+
+       .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 18px;
+        border-radius: var(--radius-full);
+        border: 1.5px solid var(--border);
+        background: var(--surface);
+        color: var(--ink-2);
+        font-size: 1.125rem;
+        font-weight: 600;
+        box-shadow: var(--shadow-sm);
+        transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+        margin-bottom: 24px;
+      }
+      .back-link:hover {
+        background: var(--surface-2);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+      .back-link i { font-size: 1.125rem; color: var(--green); }
+
+       .detail-hero {
+        position: relative;
+        width: 100%;
+        height: 420px;
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        margin-bottom: 28px;
+        box-shadow: var(--shadow-md);
+      }
+      .detail-hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+       }
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(15,23,42,.04) 0%, rgba(15,23,42,.28) 100%);
+        pointer-events: none;
+      }
+      .hero-badges {
+        position: absolute;
+        top: 18px;
+        left: 18px;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .hero-badge {
+        padding: 5px 14px;
+        border-radius: var(--radius-full);
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: .02em;
+        backdrop-filter: blur(4px);
+      }
+      .fav-btn {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.92);
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: var(--shadow-md);
+        transition: transform 0.2s, background 0.2s;
+        backdrop-filter: blur(4px);
+      }
+      .fav-btn:hover { transform: scale(1.08); background: #fff; }
+      .fav-btn.active i { color: #ef4444; }
+
+       .detail-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.85fr) 320px;
+        gap: 24px;
+        align-items: start;
+      }
+
+       .detail-main { display: flex; flex-direction: column; gap: 20px; }
+
+       .card {
+        background: var(--surface);
+        border-radius: var(--radius-xl);
+        padding: 22px;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-light);
+      }
+
+       .sec-heading {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 20px;
+      }
+      .sec-heading i { color: var(--green); font-size: 1.25rem; }
+      .sec-heading .count {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: var(--muted);
+        margin-left: 2px;
+      }
+
+      /* ── UPDATED: Title 28px, Description 18px, Font Suwannaphum ── */
+      .d-title {
+        font-size: 1.75rem;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.015em;
+        color: var(--ink);
+        margin-bottom: 14px;
+        font-family: 'Suwannaphum', serif;
+      }
+      .d-desc {
+        font-size: 1.125rem;
+        color: var(--ink-3);
+        line-height: 1.9;
+        font-family: 'Suwannaphum', serif;
+      }
+
+      .d-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+      .meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      .meta-item i { color: var(--green); font-size: 1.125rem; }
+
+       .tags-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border-light);
+      }
+      .d-tag {
+        padding: 6px 14px;
+        background: var(--surface-2);
+        color: var(--ink-3);
+        border-radius: var(--radius-full);
+        font-size: 1.125rem;
+        font-weight: 500;
+        border: 1px solid var(--border);
+      }
+
+       .nutrition-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .nut-box {
+        background: var(--surface-2);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+        padding: 18px 12px;
+        text-align: center;
+      }
+      .nut-val {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--ink);
+        line-height: 1;
+      }
+      .nut-val span { font-size: 1.125rem; font-weight: 400; color: var(--muted); margin-left: 1px; }
+      .nut-lbl {
+        font-size: 1.125rem;
+        color: var(--muted);
+        margin-top: 6px;
+        font-weight: 500;
+      }
+
+      .ingredients-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .ing-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--green-light);
+        color: #166534;
+        border: 1px solid var(--green-border);
+        padding: 7px 13px;
+        border-radius: var(--radius-full);
+        font-size: 1.125rem;
+        font-weight: 500;
+      }
+      .ing-tag i { font-size: 1.125rem; color: var(--green); }
+
+       .steps-list { display: flex; flex-direction: column; gap: 12px; }
+      .step-item {
+        display: grid;
+        grid-template-columns: 36px 1fr;
+        gap: 16px;
+        align-items: start;
+        padding: 18px 20px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        transition: border-color 0.18s;
+      }
+      .step-item:hover { border-color: var(--green-border); }
+      .step-num {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: var(--green);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.125rem;
+        font-weight: 700;
+      }
+      .step-text {
+        color: var(--ink-2);
+        font-size: 1.125rem;
+        line-height: 1.85;
+        padding-top: 6px;
+      }
+
+       .rest-food-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .rest-food-card {
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-sm);
+        cursor: pointer;
+        transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+      }
+      .rest-food-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--green-border);
+      }
+      .rest-food-img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        overflow: hidden;
+        background: #eef2ff;
+      }
+      .rest-food-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.35s ease;
+      }
+      .rest-food-card:hover .rest-food-img img { transform: scale(1.05); }
+      .rest-food-body { padding: 14px 16px 16px; }
+      .rest-food-name {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 6px;
+      }
+      .rest-food-desc {
+        font-size: 1.125rem;
+        color: var(--muted);
+        line-height: 1.65;
+        min-height: 42px;
+        margin-bottom: 12px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .rest-food-footer { display: flex; justify-content: flex-end; }
+      .rest-food-btn {
+        padding: 7px 16px;
+        background: var(--green);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius-full);
+        font-size: 1.125rem;
+        font-weight: 700;
+        transition: background 0.18s, transform 0.15s;
+      }
+      .rest-food-btn:hover { background: var(--green-dark); transform: scale(1.02); }
+
+       .tab-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 18px;
+      }
+      .filter-btn {
+        padding: 6px 16px;
+        border-radius: var(--radius-full);
+        border: 1.5px solid var(--border);
+        background: var(--surface-2);
+        color: var(--muted);
+        font-size: 1.125rem;
+        font-weight: 600;
+        transition: all 0.18s;
+      }
+      .filter-btn:hover { border-color: var(--green); color: var(--green); }
+      .filter-btn.active {
+        background: var(--green);
+        border-color: var(--green);
+        color: #fff;
+      }
+      .map-wrapper {
+        width: 100%;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+      }
+      .map-wrapper iframe {
+        width: 100%;
+        height: 300px;
+        border: 0;
+        display: block;
+      }
+      .map-open-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 14px;
+        color: var(--green-dark);
+        font-size: 1.125rem;
+        font-weight: 600;
+        transition: color 0.15s;
+      }
+      .map-open-link:hover { color: var(--ink); text-decoration: underline; }
+
+       .hours-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border-light);
+        font-size: 1.125rem;
+      }
+      .hours-row:last-child { border-bottom: none; }
+      .hours-day { color: var(--ink-2); font-weight: 500; }
+      .hours-time { color: var(--muted); font-weight: 500; }
+      .hours-row.today .hours-day { color: var(--green); font-weight: 700; }
+      .hours-row.today .hours-time { color: var(--green-dark); font-weight: 700; }
+
+      /* ── RATING SUMMARY BAR ──────────────────────── */
+      .rating-summary {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        padding: 20px;
+        background: var(--surface-2);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        margin-bottom: 20px;
+      }
+      .rating-big {
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .rating-big .num {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1;
+        color: var(--ink);
+      }
+      .rating-big .stars-row {
+        display: flex;
+        gap: 3px;
+        justify-content: center;
+        margin: 6px 0 4px;
+      }
+      .rating-big .stars-row i { font-size: 1.125rem; }
+      .rating-big .total-lbl { font-size: 1.125rem; color: var(--muted); font-weight: 500; }
+      .rating-bars { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+      .rbar-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.125rem;
+        color: var(--muted);
+      }
+      .rbar-row .lbl { width: 22px; text-align: right; font-weight: 600; flex-shrink: 0; }
+      .rbar-track {
+        flex: 1;
+        height: 7px;
+        background: var(--border);
+        border-radius: var(--radius-full);
+        overflow: hidden;
+      }
+      .rbar-fill {
+        height: 100%;
+        background: #f59e0b;
+        border-radius: var(--radius-full);
+        transition: width 0.6s cubic-bezier(.4,0,.2,1);
+      }
+      .rbar-row .pct { width: 28px; font-weight: 500; flex-shrink: 0; }
+
+       .review-card {
+        padding: 18px 20px;
+        background: var(--surface-2);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border);
+        margin-bottom: 12px;
+        transition: border-color 0.18s;
+      }
+      .review-card:last-child { margin-bottom: 0; }
+      .review-card:hover { border-color: var(--green-border); }
+      .review-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .reviewer-info { display: flex; align-items: center; gap: 10px; }
+      .reviewer-av {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: var(--green);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.125rem;
+        font-weight: 700;
+      }
+      .reviewer-name { font-size: 1.25rem; font-weight: 700; color: var(--ink); }
+      .reviewer-date { font-size: 1.125rem; color: var(--muted); margin-top: 2px; }
+      .review-stars-display {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+        white-space: nowrap;
+      }
+      .review-stars-display i { font-size: 1.125rem; }
+      .review-text { font-size: 1.125rem; color: var(--ink-3); line-height: 1.8; }
+
+      /* ── REVIEW FORM ─────────────────────────────── */
+      .review-form {
+        padding: 22px;
+        background: var(--green-light);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--green-border);
+        margin-bottom: 20px;
+      }
+      .star-picker {
+        display: flex;
+        gap: 4px;
+        margin: 12px 0 16px;
+      }
+      .star-btn {
+        background: none;
+        border: none;
+        font-size: 1.75rem;
+        color: #cbd5e1;
+        transition: color 0.12s, transform 0.12s;
+        line-height: 1;
+        padding: 2px 4px;
+      }
+      .star-btn:hover { color: #fbbf24; transform: scale(1.15); }
+      .star-btn.on    { color: #f59e0b; }
+      .star-hint {
+        font-size: 1.125rem;
+        color: var(--muted);
+        margin-top: -10px;
+        margin-bottom: 14px;
+        height: 16px;
+        transition: color 0.15s;
+      }
+      .star-hint.filled { color: var(--green-dark); font-weight: 600; }
+      .review-ta {
+        width: 100%;
+        min-height: 110px;
+        padding: 12px 16px;
+        border: 1.5px solid var(--green-border);
+        border-radius: var(--radius-sm);
+        resize: vertical;
+        outline: none;
+        background: #fff;
+        font-family: 'Suwannaphum', serif;
+        font-size: 1.125rem;
+        color: var(--ink-2);
+        transition: border-color 0.18s, box-shadow 0.18s;
+      }
+      .review-ta:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(65,141,55,.1); }
+      .review-ta-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 10px;
+      }
+      .char-count { font-size: 0.73rem; color: var(--muted); }
+      .char-count.warn { color: #ef4444; }
+      .btn-review {
+        padding: 11px 24px;
+        background: var(--green);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius-full);
+        font-size: 1.125rem;
+        font-weight: 700;
+        font-family: 'Suwannaphum', sans-serif;
+        transition: background 0.18s, transform 0.15s, opacity 0.18s;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .btn-review:hover:not(:disabled) { background: var(--green-dark); transform: translateY(-1px); }
+      .btn-review:disabled { opacity: 0.5; cursor: not-allowed; }
+      .btn-review .spinner {
+        width: 14px; height: 14px;
+        border: 2px solid rgba(255,255,255,.4);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+        display: none;
+      }
+      .btn-review.loading .spinner { display: block; }
+      .btn-review.loading .btn-label { display: none; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+       .detail-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: sticky;
+        top: 24px;
+      }
+      .sidebar-card {
+        background: var(--surface);
+        border-radius: var(--radius-xl);
+        padding: 22px;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-light);
+      }
+
+      /* Sidebar rating widget */
+      .sidebar-rating {
+        padding: 14px 0 6px;
+        border-top: 1px solid var(--border-light);
+        margin-top: 4px;
+      }
+      .sidebar-rating .sr-label {
+        font-size: 1.125rem;
+        color: var(--muted);
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+      .sidebar-rating .sr-stars {
+        display: flex;
+        gap: 3px;
+        align-items: center;
+        margin-bottom: 4px;
+      }
+      .sidebar-rating .sr-stars i { font-size: 1.25rem; }
+      .sidebar-rating .sr-val {
+        font-size: 1.125rem;
+        color: var(--muted);
+      }
+      .sidebar-rating .sr-val strong {
+        color: var(--ink);
+        font-weight: 700;
+        font-size: 1.125rem;
+      }
+
+       .info-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--border-light);
+        font-size: 1.125rem;
+      }
+      .info-row:last-child { border-bottom: none; }
+      .info-row .lbl {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-weight: 500;
+        flex-shrink: 0;
+      }
+      .info-row .lbl i { color: var(--green); font-size: 1.125rem; width: 14px; text-align: center; }
+      .info-row .val {
+        color: var(--ink);
+        font-weight: 700;
+        text-align: right;
+        word-break: break-word;
+      }
+
+       .btn-fav-s {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 13px 18px;
+        border-radius: var(--radius-full);
+        border: 1.5px solid var(--green);
+        background: var(--green-light);
+        color: #166534;
+        font-size: 1.125rem;
+        font-weight: 700;
+        font-family: 'Suwannaphum', serif;
+        font-size: 1.5rem;
+        margin-top: 16px;
+        transition: all 0.2s;
+      }
+      .btn-fav-s:hover, .btn-fav-s.active {
+        background: var(--green);
+        color: #fff;
+        border-color: var(--green-dark);
+      }
+
+      .features-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+      .feature-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 12px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-full);
+        font-size: 1.125rem;
+        color: var(--ink-2);
+        font-weight: 500;
+      }
+
+      .related-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .related-card {
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s, box-shadow 0.2s;
+        background: var(--surface);
+      }
+      .related-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+      .related-card img { width: 100%; height: 90px; object-fit: cover; }
+      .related-card-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--ink);
+        padding: 10px 10px 12px;
+        line-height: 1.3;
+      }
+
+       .skel {
+        border-radius: var(--radius-md);
+        background: linear-gradient(90deg, #eef0f4 25%, #e2e6ed 50%, #eef0f4 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+      @keyframes shimmer {
+        0%   { background-position: -200% 0; }
+        100% { background-position:  200% 0; }
+      }
+
+       .error-card {
+        text-align: center;
+        padding: 64px 32px;
+      }
+      .error-icon { font-size: 3rem; opacity: 0.18; margin-bottom: 16px; }
+
+      /* ── KHMER TOAST ─────────────────────────────── */
+      #khmer-toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(80px);
+        background: #1e293b;
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: var(--radius-full);
+        font-family: 'Suwannaphum', sans-serif;
+        font-size: 1.125rem;
+        font-weight: 600;
+        z-index: 9999;
+        box-shadow: 0 8px 32px rgba(0,0,0,.22);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        opacity: 0;
+        transition: opacity 0.3s, transform 0.3s;
+        white-space: nowrap;
+        pointer-events: none;
+        min-width: 200px;
+        justify-content: center;
+      }
+      #khmer-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      #khmer-toast.success { background: var(--green-dark); }
+      #khmer-toast.error   { background: #dc2626; }
+      #khmer-toast.info    { background: #2563eb; }
+
+       @media (max-width: 1024px) {
+        .detail-layout {
+          grid-template-columns: 1fr;
+        }
+        .detail-sidebar {
+          position: static;
+        }
+        .rest-food-grid,
+        .related-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .detail-page { padding: 28px 16px 48px; }
+      }
+      @media (max-width: 768px) {
+        .detail-hero { height: 260px; border-radius: var(--radius-lg); }
+        .d-title { font-size: 28px; }
+        .d-desc  { font-size: 18px; }
+        .nutrition-grid { grid-template-columns: repeat(2, 1fr); }
+        .info-row { flex-wrap: wrap; }
+        .info-row .val { text-align: left; }
+        .map-wrapper iframe { height: 240px; }
+        .card { padding: 20px; }
+        .sidebar-card { padding: 18px; }
+        .rating-summary { flex-direction: column; gap: 16px; }
+        .rating-big .num { font-size: 2.5rem; }
+      }
+      @media (max-width: 480px) {
+        .rest-food-grid { grid-template-columns: 1fr; }
+        .related-grid   { grid-template-columns: repeat(2, 1fr); }
+        .d-title { font-size: 28px; }
+        .d-desc  { font-size: 18px; }
+        .detail-hero { height: 220px; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Khmer Toast -->
+    <div id="khmer-toast"></div>
+
+<div id="navbar-root"></div>
+
+    <div class="detail-page" style="margin-top: 50px;">
+
+      <button class="back-link" onclick="location.href='/src/pages/Product_Page/product.html'">
+        <i class="fa-solid fa-arrow-left" style="color: rgb(27, 105, 12);"></i> ត្រឡប់ក្រោយ
+      </button>
+
+       <div id="detail-content" style="display:none">
+
+        <div class="detail-hero">
+          <img id="d-img" src="" alt="" />
+          <div class="hero-overlay"></div>
+          <div class="hero-badges" id="d-badges"></div>
+          <button class="fav-btn" id="fav-btn" onclick="toggleFav()" title="រក្សាទុក">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+        </div>
+
+        <div class="detail-layout">
+
+           <main class="detail-main">
+
+            <div class="card">
+              <h1 class="d-title" id="d-title"></h1>
+              <div class="d-meta" id="d-meta"></div>
+              <p class="d-desc" id="d-desc"></p>
+              <div id="d-tags-wrap" style="display:none">
+                <div class="tags-wrap" id="d-tags"></div>
+              </div>
+            </div>
+
+            <div class="card" id="nutrition-card" style="display:none">
+              <div class="sec-heading">
+                <i class="fa-solid fa-chart-pie"></i> តម្លៃអាហារូបត្ថម្ភ
+              </div>
+              <div class="nutrition-grid" id="nutrition-grid"></div>
+            </div>
+
+            <div class="card" id="ing-card" style="display:none">
+              <div class="sec-heading">
+                <i class="fa-solid fa-basket-shopping"></i> គ្រឿងផ្សំ
+              </div>
+              <div class="ingredients-wrap" id="ing-list"></div>
+            </div>
+
+            <div class="card" id="steps-card" style="display:none">
+              <div class="sec-heading">
+                <i class="fa-solid fa-list-ol"></i> វិធីធ្វើ
+              </div>
+              <div class="steps-list" id="steps-list"></div>
+            </div>
+
+            <div class="card" id="rest-foods-card" style="display:none">
+              <div class="sec-heading">
+                <i class="fa-solid fa-utensils"></i> ម្ហូបក្នុងភោជនីយដ្ឋាន
+                <span class="count" id="food-count"></span>
+              </div>
+              <div class="tab-pills" id="food-filter-pills"></div>
+              <div class="rest-food-grid" id="rest-foods-grid">
+                <div class="skel" style="height:180px"></div>
+                <div class="skel" style="height:180px"></div>
+                <div class="skel" style="height:180px"></div>
+                <div class="skel" style="height:180px"></div>
+              </div>
+            </div>
+
+            <div class="card" id="map-card" style="display:none">
+              <div class="sec-heading">
+                <i class="fa-solid fa-map-location-dot"></i> ទីតាំងភោជនីយដ្ឋាន
+              </div>
+              <div class="map-wrapper">
+                <iframe
+                  id="map-iframe"
+                  src=""
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+              </div>
+              <a id="map-open-link" href="#" target="_blank" class="map-open-link">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> បើកក្នុង Google Maps
+              </a>
+            </div>
+
+            <div class="card" id="hours-card" style="display:none">
+              <div class="sec-heading">
+                <i class="fa-regular fa-clock"></i> ម៉ោងបើកធ្វើការ
+              </div>
+              <div id="hours-table"></div>
+            </div>
+
+            <!-- Reviews card — always visible for food & restaurant -->
+            <div class="card" id="reviews-card" style="display:none">
+              <div class="sec-heading">
+                <i class="fa-regular fa-star"></i> មតិយោបល់
+                <span class="count" id="review-count"></span>
+              </div>
+
+              <!-- Rating summary bar (injected after load) -->
+              <div id="rating-summary-wrap"></div>
+
+              <!-- Review form -->
+              <div id="review-form-wrap"></div>
+
+              <!-- Review list -->
+              <div id="reviews-list">
+                <div class="skel" style="height:80px;margin-bottom:10px"></div>
+                <div class="skel" style="height:80px"></div>
+              </div>
+            </div>
+
+          </main>
+
+           <aside class="detail-sidebar">
+
+            <div class="sidebar-card">
+              <div class="sec-heading" style="margin-bottom:8px">
+                <i class="fa-solid fa-circle-info"></i> ព័ត៌មានសង្ខេប
+              </div>
+              <div id="sidebar-info"></div>
+              <!-- Sidebar rating widget (injected after load) -->
+              <div id="sidebar-rating-wrap"></div>
+              <button class="btn-fav-s" id="fav-s-btn" onclick="toggleFav()">
+                <i class="fa-regular fa-heart"></i> រក្សាទុក
+              </button>
+            </div>
+
+            <div class="sidebar-card" id="features-card" style="display:none">
+              <div class="sec-heading" style="margin-bottom:12px">
+                <i class="fa-solid fa-star"></i> គុណលក្ខណៈ
+              </div>
+              <div class="features-wrap" id="features-list"></div>
+            </div>
+
+            <div class="sidebar-card">
+              <div class="sec-heading" style="margin-bottom:12px">
+                <i class="fa-solid fa-utensils"></i> ពាក់ព័ន្ធ
+              </div>
+              <div class="related-grid" id="related-grid">
+                <div class="skel" style="height:110px"></div>
+                <div class="skel" style="height:110px"></div>
+                <div class="skel" style="height:110px"></div>
+                <div class="skel" style="height:110px"></div>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+
+      <div id="error-state" style="display:none">
+        <div class="card error-card">
+          <div class="error-icon"><i class="fa-regular fa-face-frown"></i></div>
+          <h2 class="d-title" style="font-size:1.75rem;margin-bottom:8px">រកមិនឃើញ</h2>
+          <p style="color:var(--muted);font-size:1.125rem;margin-bottom:24px">ទិន្នន័យប្រហែលជាត្រូវបានលុបចោល</p>
+          <button
+            class="btn-review"
+            onclick="location.href='/src/pages/Product_Page/product.html'">
+            <i class="fa-solid fa-arrow-left"></i> ត្រឡប់
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="footer-root"></div>
+
+    <script src="/src/services/api.js"></script>
+    <script src="/src/components/Navbar.js"></script>
+    <script src="/src/components/Footer.js"></script>
+
+    <script>
+      /* ── SAFE FALLBACKS ─────────────────────────── */
+      if (typeof Auth === 'undefined')           window.Auth           = { isLoggedIn:()=>false, isAdmin:()=>false, getUser:()=>null };
+      if (typeof FoodPostsAPI === 'undefined')   window.FoodPostsAPI   = { get:async()=>({}), list:async()=>[] };
+      if (typeof FoodItemsAPI === 'undefined')   window.FoodItemsAPI   = { get:async()=>({}), list:async()=>[], reviews:async()=>[] };
+      if (typeof RestaurantsAPI === 'undefined') window.RestaurantsAPI = { get:async()=>({}), list:async()=>[], foodItems:async()=>[], reviews:async()=>[] };
+      if (typeof ReviewsAPI === 'undefined')     window.ReviewsAPI     = { create:async()=>({}) };
+      if (typeof FavoritesAPI === 'undefined')   window.FavoritesAPI   = { addFood:async()=>{}, removeFood:async()=>{}, addRestaurant:async()=>{}, removeRestaurant:async()=>{} };
+
+      /* ── KHMER TOAST (replaces showToast) ────────── */
+      const KHMER_MSGS = {
+        success: '✓',
+        error:   '✗',
+        info:    'ℹ'
+      };
+      let _toastTimer = null;
+      function showToast(msg, type = 'success') {
+        const el = document.getElementById('khmer-toast');
+        if (!el) return;
+        el.className = '';
+        el.textContent = msg;
+        void el.offsetWidth; // reflow
+        el.className = type;
+        requestAnimationFrame(() => el.classList.add('show'));
+        if (_toastTimer) clearTimeout(_toastTimer);
+        _toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+      }
+
+      const FOOD_FB = [
+        'https://cafeindochinerestaurant.com/wp-content/uploads/2023/07/22-1.webp',
+        'https://cafeindochinerestaurant.com/wp-content/uploads/2023/07/33-1.webp',
+        'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80',
+      ];
+      const REST_FB = [
+        'https://cafeindochinerestaurant.com/wp-content/uploads/2023/07/bg-3.webp',
+        'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80',
+      ];
+
+      const params     = new URLSearchParams(location.search);
+      const TYPE       = params.get('type') || 'post';
+      const ITEM_ID    = params.get('id')   || '';
+      let isFav        = false;
+      let selRating    = 0;
+      let allFoodItems = [];
+
+      /* ── STAR LABEL MAP (Khmer) ──────────────────── */
+      const STAR_LABELS = ['','មិនល្អសោះ','គួរអោយអស់សំណើច','ធម្មតា','ល្អ','ល្អណាស់'];
+
+      function _img(url, fb) {
+        if (!url || url==='string' || url==='null' || url.includes('example.com') || !url.startsWith('http'))
+          return fb[Math.floor(Math.random()*fb.length)];
+        return url;
+      }
+      function _date(d) {
+        return d ? new Date(d).toLocaleDateString('km-KH',{year:'numeric',month:'short',day:'numeric'}) : '—';
+      }
+
+      /* ── STAR HTML HELPERS ───────────────────────── */
+      function starsHtml(rating, size='sm') {
+        const r = parseFloat(rating) || 0;
+        const fs = size === 'lg' ? '1.1rem' : '0.82rem';
+        let h = '';
+        for (let i=1;i<=5;i++) {
+          if (i <= r)           h += `<i class="fa-solid fa-star" style="color:#f59e0b;font-size:${fs}"></i>`;
+          else if (i-0.5 <= r) h += `<i class="fa-solid fa-star-half-stroke" style="color:#f59e0b;font-size:${fs}"></i>`;
+          else                  h += `<i class="fa-regular fa-star" style="color:#d1d5db;font-size:${fs}"></i>`;
+        }
+        return h;
+      }
+
+      /* ── RATING SUMMARY (uses API data) ────────────
+         API fields: review.rating (number 1-5), review.review_text, review.created_at
+         Average is computed client-side from the fetched reviews array.
+      ─────────────────────────────────────────────── */
+      function renderRatingSummary(reviews) {
+        const wrap = document.getElementById('rating-summary-wrap');
+        if (!wrap) return;
+
+        if (!reviews || !reviews.length) {
+          wrap.innerHTML = '';
+          const sbWrap = document.getElementById('sidebar-rating-wrap');
+          if (sbWrap) sbWrap.innerHTML = `
+            <div class="sidebar-rating">
+              <div class="sr-label">ការវាយតម្លៃ</div>
+              <div class="sr-stars">${starsHtml(0,'lg')}</div>
+              <div class="sr-val"><strong>0.0</strong> / 5 &nbsp;·&nbsp; 0 មតិ</div>
+            </div>`;
+          return;
+        }
+
+        // Count per star (1-5)
+        const counts = {1:0, 2:0, 3:0, 4:0, 5:0};
+        reviews.forEach(r => {
+          const n = Math.round(parseFloat(r.rating) || 0);
+          if (n >= 1 && n <= 5) counts[n]++;
+        });
+        const total = reviews.length;
+        const avg   = total
+          ? reviews.reduce((s, r) => s + (parseFloat(r.rating) || 0), 0) / total
+          : 0;
+
+        const barsHtml = [5,4,3,2,1].map(n => {
+          const pct = total ? Math.round(counts[n] / total * 100) : 0;
+          return `<div class="rbar-row">
+            <span class="lbl">${n}</span>
+            <i class="fa-solid fa-star" style="color:#f59e0b;font-size:1.125rem;flex-shrink:0;"></i>
+            <div class="rbar-track"><div class="rbar-fill" style="width:${pct}%"></div></div>
+            <span class="pct">${pct}%</span>
+          </div>`;
+        }).join('');
+
+        wrap.innerHTML = `
+          <div class="rating-summary">
+            <div class="rating-big">
+              <div class="num">${avg.toFixed(1)}</div>
+              <div class="stars-row">${starsHtml(avg,'lg')}</div>
+              <div class="total-lbl">${total} មតិ</div>
+            </div>
+            <div class="rating-bars">${barsHtml}</div>
+          </div>`;
+
+        // Sidebar
+        const sbWrap = document.getElementById('sidebar-rating-wrap');
+        if (sbWrap) {
+          sbWrap.innerHTML = `
+            <div class="sidebar-rating">
+              <div class="sr-label">ការវាយតម្លៃ</div>
+              <div class="sr-stars">${starsHtml(avg,'lg')}</div>
+              <div class="sr-val"><strong>${avg.toFixed(1)}</strong> / 5 &nbsp;·&nbsp; ${total} មតិ</div>
+            </div>`;
+        }
+      }
+
+      /* ── INIT ───────────────────────────────────── */
+      document.addEventListener('DOMContentLoaded', async () => {
+        if (!ITEM_ID) { showError(); return; }
+        try {
+          if      (TYPE==='post')       await renderPost(await FoodPostsAPI.get(ITEM_ID));
+          else if (TYPE==='food')       await renderFood(await FoodItemsAPI.get(ITEM_ID));
+          else if (TYPE==='restaurant') await renderRestaurant(await RestaurantsAPI.get(ITEM_ID));
+          else { showError(); return; }
+
+          await loadReviews();
+          await loadRelated();
+          renderReviewForm();
+
+          document.getElementById('detail-content').style.display = '';
+        } catch(e) {
+          console.error(e);
+          showError();
+        }
+      });
+
+      /* ── RENDER FUNCTIONS ───────────────────────── */
+      async function renderPost(p) {
+        document.title = `${p.title} — ម្ហូប`;
+        document.getElementById('d-img').src = _img(p.image_url, FOOD_FB);
+
+        const dc = { easy:'#22c55e', medium:'#f59e0b', hard:'#ef4444' };
+        const dl = { easy:'ងាយ', medium:'មធ្យម', hard:'លំបាក' };
+        const d  = p.difficulty_level || '';
+        document.getElementById('d-badges').innerHTML =
+          (d ? `<span class="hero-badge" style="background:${dc[d]||'#888'}">${dl[d]||d}</span>` : '') +
+          (p.tags||[]).slice(0,2).map(t=>`<span class="hero-badge" style="background:rgba(15,23,42,.55)">${t}</span>`).join('');
+
+        document.getElementById('d-title').textContent = p.title || '—';
+        document.getElementById('d-meta').innerHTML = [
+          p.cooking_time_minutes && `<span class="meta-item"><i class="fa-regular fa-clock"></i>${p.cooking_time_minutes} នាទី</span>`,
+          p.servings             && `<span class="meta-item"><i class="fa-solid fa-users"></i>${p.servings} នាក់</span>`,
+          `<span class="meta-item"><i class="fa-regular fa-heart" style="color:#ef4444"></i>${p.likes_count||0}</span>`,
+          p.created_at           && `<span class="meta-item"><i class="fa-regular fa-calendar"></i>${_date(p.created_at)}</span>`,
+        ].filter(Boolean).join('');
+
+        document.getElementById('d-desc').textContent = p.description || '';
+
+        if ((p.tags||[]).length) {
+          document.getElementById('d-tags-wrap').style.display = '';
+          document.getElementById('d-tags').innerHTML = p.tags.map(t=>`<span class="d-tag">#${t}</span>`).join('');
+        }
+        if ((p.ingredients||[]).length) {
+          document.getElementById('ing-card').style.display = '';
+          document.getElementById('ing-list').innerHTML = p.ingredients.map(i=>
+            `<span class="ing-tag"><i class="fa-solid fa-check"></i>${i}</span>`).join('');
+        }
+        const steps = p.step_to_cook || [];
+        if (steps.length || p.recipe) {
+          document.getElementById('steps-card').style.display = '';
+          const list = steps.length ? steps : [p.recipe];
+          document.getElementById('steps-list').innerHTML = list.map((s,i)=>
+            `<div class="step-item">
+              <div class="step-num">${i+1}</div>
+              <div class="step-text">${s}</div>
+            </div>`).join('');
+        }
+
+        document.getElementById('sidebar-info').innerHTML = buildInfoRows([
+          { i:'fa-clock',    l:'ពេលចម្អិន',  v: p.cooking_time_minutes ? p.cooking_time_minutes+" ន'" : '—' },
+          { i:'fa-users',    l:'សម្រាប់',    v: p.servings ? p.servings+' នាក់' : '—' },
+          { i:'fa-signal',   l:'កម្រិត',     v: dl[d] || '—' },
+          { i:'fa-heart',    l:'ចូលចិត្ត',   v: p.likes_count || 0 },
+          { i:'fa-calendar', l:'ថ្ងៃបង្ហោះ', v: _date(p.created_at) },
+        ]);
+      }
+
+      async function renderFood(f) {
+        document.title = `${f.name} — ម្ហូប`;
+        document.getElementById('d-img').src = _img(f.image_url, FOOD_FB);
+        document.getElementById('d-badges').innerHTML =
+          (f.category   ? `<span class="hero-badge" style="background:#22c55e">${f.category}</span>` : '') +
+          (f.is_trending ? `<span class="hero-badge" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">ពេញ​និយម</span>` : '');
+
+        document.getElementById('d-title').textContent = f.name || '—';
+        document.getElementById('d-meta').innerHTML = [
+          f.average_rating           && `<span class="meta-item"><i class="fa-solid fa-star" style="color:#f59e0b"></i>${parseFloat(f.average_rating).toFixed(1)} (${f.rating_count||0})</span>`,
+          f.preparation_time_minutes && `<span class="meta-item"><i class="fa-regular fa-clock"></i>${f.preparation_time_minutes} នាទី</span>`,
+          f.cuisine                  && `<span class="meta-item"><i class="fa-solid fa-bowl-food"></i>${f.cuisine}</span>`,
+        ].filter(Boolean).join('');
+        document.getElementById('d-desc').textContent = f.description || '';
+
+        if (f.calories || f.protein || f.carbs || f.fat) {
+          document.getElementById('nutrition-card').style.display = '';
+          document.getElementById('nutrition-grid').innerHTML = [
+            { l:'កាឡូរី',       v:f.calories||0, u:'kcal' },
+            { l:'ប្រូតេអ៊ីន',  v:f.protein||0,  u:'g' },
+            { l:'កាបូអ៊ីដ្រាត', v:f.carbs||0,    u:'g' },
+            { l:'ខ្លាញ់',       v:f.fat||0,      u:'g' },
+          ].map(n=>`<div class="nut-box">
+            <div class="nut-val">${n.v}<span>${n.u}</span></div>
+            <div class="nut-lbl">${n.l}</div>
+          </div>`).join('');
+        }
+        if ((f.ingredients||[]).length) {
+          document.getElementById('ing-card').style.display = '';
+          document.getElementById('ing-list').innerHTML = f.ingredients.map(i=>
+            `<span class="ing-tag"><i class="fa-solid fa-check"></i>${i}</span>`).join('');
+        }
+
+        document.getElementById('sidebar-info').innerHTML = buildInfoRows([
+          { i:'fa-tag',         l:'តម្លៃ',      v: f.price ? `$${parseFloat(f.price).toFixed(2)}` : '—' },
+          { i:'fa-layer-group', l:'ប្រភេទ',     v: f.category || '—' },
+          { i:'fa-bowl-food',   l:'ប្រភេទម្ហូប', v: f.cuisine || '—' },
+          { i:'fa-clock',       l:'ពេលចម្អិន',  v: f.preparation_time_minutes ? f.preparation_time_minutes+' នាទី' : '—' },
+          { i:'fa-star',        l:'ពិន្ទុ',     v: f.average_rating ? parseFloat(f.average_rating).toFixed(1)+'★' : '—' },
+        ]);
+      }
+
+      async function renderRestaurant(r) {
+        document.title = `${r.name} — ម្ហូប`;
+        document.getElementById('d-img').src = _img(r.image_url, REST_FB);
+
+        const cuisine = (r.cuisine_types||[]).filter(c=>c&&c!=='string').slice(0,2).join(', ') || '';
+        document.getElementById('d-badges').innerHTML =
+          (cuisine ? `<span class="hero-badge" style="background:#22c55e">${cuisine}</span>` : '') +
+          (r.is_trending ? `<span class="hero-badge" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">ពេញ​និយម</span>` : '');
+
+        document.getElementById('d-title').textContent = r.name || '—';
+        document.getElementById('d-meta').innerHTML = [
+          r.phone                                    && `<span class="meta-item"><i class="fa-solid fa-phone"></i>${r.phone}</span>`,
+          r.email && r.email!=='user@example.com'    && `<span class="meta-item"><i class="fa-solid fa-envelope"></i>${r.email}</span>`,
+          r.website && r.website.startsWith('http')  && `<span class="meta-item"><a href="${r.website}" target="_blank"><i class="fa-solid fa-globe"></i>Website</a></span>`,
+          r.address && `<span class="meta-item"><i class="fa-solid fa-location-dot"></i>${r.address}</span>`,
+        ].filter(Boolean).join('');
+        document.getElementById('d-desc').textContent = r.description || '';
+
+        const features = (r.features||[]).filter(f=>f&&f!=='string');
+        if (features.length) {
+          document.getElementById('features-card').style.display = '';
+          document.getElementById('features-list').innerHTML = features.map(f=>
+            `<span class="feature-tag"><i class="fa-solid fa-check" style="color:var(--green);font-size:1.125rem;"></i>${f}</span>`).join('');
+        }
+
+        const hours = r.opening_hours || {};
+        const realH = Object.entries(hours).filter(([k])=>!k.startsWith('additional'));
+        if (realH.length) {
+          document.getElementById('hours-card').style.display = '';
+          const today = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][new Date().getDay()];
+          document.getElementById('hours-table').innerHTML = realH.map(([day,time])=>{
+            const isToday = day.toLowerCase()===today;
+            return `<div class="hours-row${isToday?' today':''}">
+              <span class="hours-day">${day.charAt(0).toUpperCase()+day.slice(1)}${isToday?' (ថ្ងៃនេះ)':''}</span>
+              <span class="hours-time">${time}</span>
+            </div>`;
+          }).join('');
+        }
+
+        document.getElementById('sidebar-info').innerHTML = buildInfoRows([
+          { i:'fa-star',        l:'ពិន្ទុ',      v: r.average_rating ? parseFloat(r.average_rating).toFixed(1)+'★' : 'ថ្មី' },
+          { i:'fa-utensils',    l:'ប្រភេទម្ហូប', v: (r.cuisine_types||[]).filter(c=>c&&c!=='string').join(', ')||'—' },
+          { i:'fa-phone',       l:'ទូរស័ព្ទ',    v: r.phone||'—' },
+          { i:'fa-dollar-sign', l:'តម្លៃ',        v: r.price_range||'—' },
+          { i:'fa-calendar',    l:'ថ្ងៃបង្កើត',   v: _date(r.created_at) },
+        ]);
+
+        renderMap(r);
+        loadRestaurantFoods(r.id);
+      }
+
+      function renderMap(r) {
+        const mapCard = document.getElementById('map-card');
+        const iframe  = document.getElementById('map-iframe');
+        const link    = document.getElementById('map-open-link');
+        let query = r.latitude && r.longitude
+          ? `${r.latitude},${r.longitude}`
+          : (r.address && r.address.trim() && r.address!=='string')
+            ? `${r.address}${r.city?', '+r.city:''}`
+            : `${r.name}, Phnom Penh, Cambodia`;
+        const enc = encodeURIComponent(query);
+        iframe.src = `https://maps.google.com/maps?q=${enc}&output=embed&hl=km&z=16`;
+        link.href  = `https://www.google.com/maps/search/?api=1&query=${enc}`;
+        mapCard.style.display = '';
+      }
+
+      async function loadRestaurantFoods(restaurantId) {
+        document.getElementById('rest-foods-card').style.display = '';
+        const grid = document.getElementById('rest-foods-grid');
+        try {
+          const foods = await RestaurantsAPI.foodItems(restaurantId, 0, 50);
+          allFoodItems = Array.isArray(foods) ? foods : [];
+          document.getElementById('food-count').textContent = `(${allFoodItems.length})`;
+          if (!allFoodItems.length) {
+            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:36px;color:var(--muted);">
+              <i class="fa-solid fa-utensils" style="font-size:2rem;display:block;margin-bottom:10px;opacity:.25;"></i>
+              មិនទាន់មានម្ហូប</div>`;
+            return;
+          }
+          const cats = [...new Set(allFoodItems.map(f=>f.category).filter(c=>c&&c!=='string'))];
+          const pillsEl = document.getElementById('food-filter-pills');
+          if (cats.length > 1) {
+            pillsEl.innerHTML =
+              `<button class="filter-btn active" onclick="filterRestFood('',this)">ទាំងអស់</button>` +
+              cats.map(c=>`<button class="filter-btn" onclick="filterRestFood('${c}',this)">${c}</button>`).join('');
+          }
+          renderRestFoods(allFoodItems);
+        } catch(e) {
+          grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:#ef4444;font-size:1.125rem;">${e.message}</div>`;
+        }
+      }
+
+      function renderRestFoods(foods) {
+        const grid = document.getElementById('rest-foods-grid');
+        if (!foods.length) {
+          grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--muted);">រកមិនឃើញ</div>`;
+          return;
+        }
+        grid.innerHTML = foods.map(f=>{
+          const img = _img(f.image_url, FOOD_FB);
+          const url = `/src/pages/Product_details/detail.html?type=food&id=${f.id}`;
+          return `<div class="rest-food-card" onclick="location.href='${url}'">
+            <div class="rest-food-img">
+              <img src="${img}" alt="${(f.name||'').replace(/"/g,'')}" onerror="this.src='${FOOD_FB[0]}'"/>
+            </div>
+            <div class="rest-food-body">
+              <div class="rest-food-name">${f.name||'—'}</div>
+              <div class="rest-food-desc">${f.description||''}</div>
+              <div class="rest-food-footer">
+                <button class="rest-food-btn" onclick="event.stopPropagation();location.href='${url}'">មើល</button>
+              </div>
+            </div>
+          </div>`;
+        }).join('');
+      }
+
+      function filterRestFood(cat, btn) {
+        document.querySelectorAll('#food-filter-pills .filter-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        renderRestFoods(cat ? allFoodItems.filter(f=>f.category===cat) : allFoodItems);
+      }
+
+      /* ── LOAD REVIEWS (matched to API) ──────────────
+         API returns array of objects:
+           { id, user_id, rating, review_text, created_at, food_item_id?, restaurant_id? }
+         We compute average locally from the returned reviews.
+      ─────────────────────────────────────────────── */
+      async function loadReviews() {
+        const list = document.getElementById('reviews-list');
+        const card = document.getElementById('reviews-card');
+        if (TYPE==='post') { list.innerHTML = ''; return; }
+
+        card.style.display = '';
+
+        try {
+          let reviews = [];
+          if      (TYPE==='food')       reviews = await FoodItemsAPI.reviews(ITEM_ID, 0, 50);
+          else if (TYPE==='restaurant') reviews = await RestaurantsAPI.reviews(ITEM_ID, 0, 50);
+
+          if (!Array.isArray(reviews)) reviews = [];
+          document.getElementById('review-count').textContent = `(${reviews.length})`;
+
+          // Render summary bar using actual API data
+          renderRatingSummary(reviews);
+
+          if (!reviews.length) {
+            list.innerHTML = `<div style="text-align:center;padding:28px;color:var(--muted);font-size:1.125rem;">
+              <i class="fa-regular fa-comment-dots" style="font-size:2rem;display:block;margin-bottom:8px;opacity:.3;"></i>
+              មិនទាន់មានមតិ</div>`;
+            return;
+          }
+
+          list.innerHTML = reviews.map(r => {
+            const rating = parseFloat(r.rating) || 0;
+            const user   = Auth.getUser();
+            const isOwn  = user && r.user_id === user.id;
+            const initials = r.user_id ? r.user_id.slice(-2).toUpperCase() : 'U';
+            const displayName = isOwn
+              ? (user.full_name ? user.full_name.split(' ')[0] : 'អ្នក')
+              : 'អ្នកប្រើ';
+            return `
+            <div class="review-card" id="review-${r.id}">
+              <div class="review-header">
+                <div class="reviewer-info">
+                  <div class="reviewer-av">${initials}</div>
+                  <div>
+                    <div class="reviewer-name">${displayName}${isOwn ? ' <span style="font-size:1.125rem;color:var(--green);font-weight:600;">(អ្នក)</span>' : ''}</div>
+                    <div class="reviewer-date">${_date(r.created_at)}</div>
+                  </div>
+                </div>
+                <div class="review-stars-display">${starsHtml(rating)}</div>
+              </div>
+              <div class="review-text">${r.review_text || ''}</div>
+            </div>`;
+          }).join('');
+        } catch(e) {
+          console.error('loadReviews error:', e);
+          list.innerHTML = `<div style="text-align:center;padding:20px;color:#ef4444;font-size:1.125rem;">មិនអាចទាញមតិបាន</div>`;
+        }
+      }
+
+      /* ── REVIEW FORM ─────────────────────────────── */
+      function renderReviewForm() {
+        const wrap = document.getElementById('review-form-wrap');
+        if (TYPE==='post') { wrap.innerHTML=''; return; }
+
+        if (!Auth.isLoggedIn()) {
+          wrap.innerHTML = `<div style="text-align:center;padding:14px 16px;background:var(--surface-2);border-radius:var(--radius-sm);margin-bottom:16px;border:1px solid var(--border);">
+            <a href="/src/pages/Login_Page/login.html" style="color:var(--green);font-weight:700;font-size:1.125rem;">
+              <i class="fa-solid fa-right-to-bracket"></i> ចូលគណនីដើម្បីសរសេរមតិ</a></div>`;
+          return;
+        }
+
+        wrap.innerHTML = `
+          <div class="review-form">
+            <div class="sec-heading" style="margin-bottom:4px">
+              <i class="fa-regular fa-pen-to-square"></i> សរសេរមតិ
+            </div>
+            <div class="star-picker" id="star-picker">
+              ${[1,2,3,4,5].map(n=>`<button class="star-btn" onclick="setRating(${n})" onmouseover="hoverRating(${n})" onmouseout="unhoverRating()" data-n="${n}" title="${STAR_LABELS[n]}">
+                <i class="fa-regular fa-star"></i>
+              </button>`).join('')}
+            </div>
+            <div class="star-hint" id="star-hint">សូមជ្រើសរើសចំនួនផ្កាយ</div>
+            <textarea class="review-ta" id="review-ta" rows="3" placeholder="ចែករំលែកបទពិសោធន៍របស់អ្នក..." oninput="onTaInput(this)"></textarea>
+            <div class="review-ta-footer">
+              <span class="char-count" id="char-count">0 / 500</span>
+              <button class="btn-review" id="btn-review-submit" onclick="submitReview()">
+                <div class="spinner"></div>
+                <span class="btn-label"><i class="fa-solid fa-paper-plane"></i> ផ្ញើ</span>
+              </button>
+            </div>
+          </div>`;
+      }
+
+      function hoverRating(n) {
+        if (selRating > 0) return;
+        updateStarUI(n, false);
+        const hint = document.getElementById('star-hint');
+        if (hint) { hint.textContent = STAR_LABELS[n]; hint.classList.add('filled'); }
+      }
+
+      function unhoverRating() {
+        if (selRating > 0) return;
+        updateStarUI(0, false);
+        const hint = document.getElementById('star-hint');
+        if (hint) { hint.textContent = 'សូមជ្រើសរើសចំនួនផ្កាយ'; hint.classList.remove('filled'); }
+      }
+
+      function setRating(n) {
+        selRating = n;
+        updateStarUI(n, true);
+        const hint = document.getElementById('star-hint');
+        if (hint) { hint.textContent = STAR_LABELS[n]; hint.classList.add('filled'); }
+      }
+
+      function updateStarUI(n, committed) {
+        document.querySelectorAll('.star-btn').forEach((b, i) => {
+          const icon = b.querySelector('i');
+          if (i < n) {
+            b.classList.add('on');
+            icon.className = 'fa-solid fa-star';
+          } else {
+            b.classList.remove('on');
+            icon.className = 'fa-regular fa-star';
+          }
+        });
+      }
+
+      function onTaInput(ta) {
+        const len = ta.value.length;
+        const cc  = document.getElementById('char-count');
+        if (cc) {
+          cc.textContent = `${len} / 500`;
+          cc.classList.toggle('warn', len > 450);
+        }
+        if (len > 500) ta.value = ta.value.slice(0,500);
+      }
+
+      /* ── SUBMIT REVIEW (matched to API body) ────────
+         POST /reviews with body:
+           { user_id, rating, review_text, food_item_id?, restaurant_id? }
+         The API requires user to be logged in (Bearer token via apiFetch).
+      ─────────────────────────────────────────────── */
+      async function submitReview() {
+        // Guard: must select stars
+        if (!selRating) {
+          showToast('សូមជ្រើសរើសចំនួនផ្កាយសិន!', 'info');
+          return;
+        }
+
+        // Guard: must be logged in
+        const user = Auth.getUser();
+        if (!user || !Auth.isLoggedIn()) {
+          showToast('សូមចូលគណនីដើម្បីផ្ញើមតិ!', 'error');
+          setTimeout(() => { location.href = '/src/pages/Login_Page/login.html'; }, 1500);
+          return;
+        }
+
+        const text = document.getElementById('review-ta')?.value?.trim() || '';
+
+        // Build API body — only include relevant ID field
+        const body = {
+          user_id:     user.id,
+          rating:      selRating,
+          review_text: text,
+        };
+        if (TYPE === 'food')       body.food_item_id  = ITEM_ID;
+        if (TYPE === 'restaurant') body.restaurant_id = ITEM_ID;
+
+        const btn = document.getElementById('btn-review-submit');
+        if (btn) { btn.disabled = true; btn.classList.add('loading'); }
+
+        try {
+          await ReviewsAPI.create(body);
+          showToast('មតិរបស់អ្នកត្រូវបានផ្ញើដោយជោគជ័យ! ', 'success');
+
+          // Reset form state
+          selRating = 0;
+          updateStarUI(0, true);
+          const hint = document.getElementById('star-hint');
+          if (hint) { hint.textContent = 'សូមជ្រើសរើសចំនួនផ្កាយ'; hint.classList.remove('filled'); }
+          const ta = document.getElementById('review-ta');
+          if (ta) { ta.value = ''; onTaInput(ta); }
+
+          // Reload reviews to reflect new submission
+          await loadReviews();
+        } catch(e) {
+          const errMsg = e.message || '';
+          // Translate common API errors to Khmer
+          if (errMsg.includes('already') || errMsg.includes('duplicate')) {
+            showToast('អ្នកបានផ្ញើមតិហើយ!', 'error');
+          } else if (errMsg.includes('401') || errMsg.includes('unauthorized') || errMsg.includes('token')) {
+            showToast('សូមចូលគណនីម្តងទៀត!', 'error');
+          } else if (errMsg.includes('404')) {
+            showToast('រកមិនឃើញទំព័រ! សូមព្យាយាមម្តងទៀត', 'error');
+          } else if (errMsg.includes('500')) {
+            showToast('មានបញ្ហានៅម៉ាស៊ីន! សូមព្យាយាមមើលទៀតនៅពេលក្រោយ', 'error');
+          } else {
+            showToast('ផ្ញើមិនបាន! សូមព្យាយាម​ម្តងទៀត', 'error');
+          }
+        } finally {
+          if (btn) { btn.disabled = false; btn.classList.remove('loading'); }
+        }
+      }
+
+      async function loadRelated() {
+        const grid = document.getElementById('related-grid');
+        try {
+          let items = [];
+          if      (TYPE==='post')       items = await FoodPostsAPI.list(0,6);
+          else if (TYPE==='food')       items = await FoodItemsAPI.list(0,6);
+          else if (TYPE==='restaurant') items = await RestaurantsAPI.list(0,6);
+          items = (Array.isArray(items)?items:[]).filter(i=>i.id!==ITEM_ID).slice(0,4);
+          if (!items.length) { grid.innerHTML=''; return; }
+          const fb = TYPE==='restaurant' ? REST_FB : FOOD_FB;
+          grid.innerHTML = items.map(item=>{
+            const img   = _img(item.image_url, fb);
+            const title = item.title||item.name||'—';
+            const url   = `/src/pages/Product_details/detail.html?type=${TYPE}&id=${item.id}`;
+            return `<div class="related-card" onclick="location.href='${url}'">
+              <img src="${img}" alt="${title.replace(/"/g,'')}" onerror="this.src='${fb[0]}'"/>
+              <div class="related-card-title">${title}</div>
+            </div>`;
+          }).join('');
+        } catch(e) { document.getElementById('related-grid').innerHTML=''; }
+      }
+
+      /* ── FAVORITES ───────────────────────────────── */
+      async function toggleFav() {
+        if (!Auth.isLoggedIn()) {
+          showToast('សូមចូលគណនីដើម្បីរក្សាទុក!', 'info');
+          return;
+        }
+        try {
+          if (isFav) {
+            if (TYPE==='food')       await FavoritesAPI.removeFood(ITEM_ID);
+            if (TYPE==='restaurant') await FavoritesAPI.removeRestaurant(ITEM_ID);
+            isFav = false;
+            updateFavUI(false);
+            showToast('បានដកចេញពីការរក្សាទុក', 'info');
+          } else {
+            if (TYPE==='food')       await FavoritesAPI.addFood(ITEM_ID);
+            if (TYPE==='restaurant') await FavoritesAPI.addRestaurant(ITEM_ID);
+            isFav = true;
+            updateFavUI(true);
+            showToast('បានរក្សាទុករួចរាល់! ', 'success');
+          }
+        } catch(e) {
+          const errMsg = e.message || '';
+          if (errMsg.includes('already')) {
+            showToast('ទំនិញនេះបានរក្សាទុករួចហើយ!', 'info');
+          } else {
+            showToast('មានបញ្ហា! សូមព្យាយាម​ម្តងទៀត', 'error');
+          }
+        }
+      }
+
+      function updateFavUI(on) {
+        const hb = document.getElementById('fav-btn');
+        const sb = document.getElementById('fav-s-btn');
+        if (hb) {
+          hb.classList.toggle('active', on);
+          hb.innerHTML = on
+            ? '<i class="fa-solid fa-heart" style="color:#ef4444;"></i>'
+            : '<i class="fa-regular fa-heart"></i>';
+        }
+        if (sb) {
+          sb.classList.toggle('active', on);
+          sb.innerHTML = on
+            ? '<i class="fa-solid fa-heart"></i> បានរក្សាទុករួច'
+            : '<i class="fa-regular fa-heart"></i> រក្សាទុក';
+        }
+      }
+
+      function buildInfoRows(rows) {
+        return rows.map(r=>`
+          <div class="info-row">
+            <span class="lbl"><i class="fa-solid ${r.i}"></i>${r.l}</span>
+            <span class="val">${r.v}</span>
+          </div>`).join('');
+      }
+
+      function showError() {
+        document.getElementById('error-state').style.display = '';
+      }
+    </script>
+  </body>
+</html>

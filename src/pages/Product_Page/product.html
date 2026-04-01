@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ម្ហូបទាំងអស់ — ម្ហូប</title>
+  <link rel="stylesheet" href="../../css/style.css"/>
+  <style>
+    body { background: #f7f7f5; }
+
+    .page-wrap { max-width:1280px; margin:0 auto; padding:100px 24px 60px; display:grid; grid-template-columns:220px 1fr; gap:20px; align-items:start; }
+    .sidebar { position:sticky; top:80px; display:flex; flex-direction:column; gap:14px; }
+    .sb-card { background:var(--white); border-radius:var(--radius-md); padding:14px; box-shadow:var(--shadow-sm); }
+    .sb-title { font-family:'Suwannaphum',serif; font-size:1.125rem; font-weight:700; color:var(--text-dark); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+    .sb-title i { color:var(--green-main); }
+    .cat-list { display:flex; flex-direction:column; gap:2px; }
+    .cat-btn { display:flex; align-items:center; gap:7px; padding:6px 9px; border-radius:var(--radius-sm); cursor:pointer; font-size: 1.125rem; color:var(--text-medium); font-family:'Suwannaphum',serif; border:none; background:transparent; text-align:left; width:100%; transition:all 0.18s; }
+    .cat-btn:hover,.cat-btn.active { background:var(--green-light); color:var(--green-main); font-weight:700; }
+    .cat-cnt { margin-left:auto; font-size: 1.125rem; background:#f0f0f0; color:var(--text-light); padding:1px 5px; border-radius:20px; }
+    .cat-btn.active .cat-cnt { background:var(--green-main); color:white; }
+    .toolbar { background:var(--white); border-radius:var(--radius-md); padding:11px 14px; box-shadow:var(--shadow-sm); margin-bottom:14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .tb-title { font-family:'Suwannaphum',serif; font-size:1.125rem; font-weight:700; color:var(--text-dark); }
+    .tb-count { font-size:1.125rem; background:var(--green-light); color:var(--green-main); padding:2px 8px; border-radius:20px; font-weight:600; }
+    .tb-gap { flex:1; }
+    .tb-search { display:flex; align-items:center; gap:6px; background:#f7f7f5; border:1.5px solid #e8e8e8; border-radius:var(--radius-full); padding:6px 11px; min-width:160px; }
+    .tb-search i { color:#aaa; font-size:1.20rem; }
+    .tb-search input { border:none; background:transparent; outline:none; font-family:'Suwannaphum',serif; font-size:1.125rem; color:var(--text-dark); width:100%; }
+    .tb-search input::placeholder { color:#bbb; }
+    .sort-sel { padding:6px 9px; border:1.5px solid #e8e8e8; border-radius:var(--radius-full); font-family:'Suwannaphum',serif; font-size:1.125rem; color:var(--text-dark); background:var(--white); outline:none; cursor:pointer; }
+    .create-btns { display:flex; gap:6px; flex-wrap:wrap; }
+    .cbtn { display:flex; align-items:center; gap:5px; padding:5px 11px; border:none; border-radius:var(--radius-full); font-family:'Suwannaphum',serif; font-size:1.125rem; font-weight:700; cursor:pointer; transition:opacity 0.2s; white-space:nowrap; }
+    .cbtn:hover { opacity:0.85; }
+    .cbtn-post { background:var(--green-main); color:white; }
+    .tab-pills { margin-bottom:14px; font-size: 1.125rem;
+      display: flex;
+     }
+    .skel { border-radius:var(--radius-md); background:linear-gradient(90deg,#f0f0f0 25%,#e8e8e8 50%,#f0f0f0 75%); background-size:200% 100%; animation:sh 1.4s infinite; }
+    @keyframes sh { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+    .pagination { display:flex; align-items:center; justify-content:center; gap:6px; margin-top:24px; flex-wrap:wrap; }
+    .pg-btn { min-width:32px; height:32px; border:1.5px solid #e8e8e8; border-radius:var(--radius-sm); background:var(--white); cursor:pointer; display:flex; align-items:center; justify-content:center; font-family:'Suwannaphum',serif; font-size:1.125rem; color:var(--text-medium); transition:all 0.18s; padding:0 7px; }
+    .pg-btn:hover,.pg-btn.active { background:var(--green-main); border-color:var(--green-main); color:white; }
+    .pg-btn:disabled { opacity:0.3; cursor:not-allowed; pointer-events:none; }
+
+    /* ── Fav button on post & food cards only (NOT restaurant) ── */
+    .food-card { position:relative; }
+    .card-fav-btn {
+      position:absolute; top:8px; right:8px;
+      width:30px; height:30px; border-radius:50%; border:none;
+      background:white; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.125rem;
+      box-shadow:0 2px 8px rgba(0,0,0,0.18);
+      transition:transform 0.18s;
+      z-index:10; color:#ccc;
+    }
+    .card-fav-btn:hover { transform:scale(1.15); }
+    .card-fav-btn.faved { color:#ef4444; }
+    .card-fav-btn i { pointer-events:none; }
+
+    /* Modal */
+    .modal-bg { position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.22s; }
+    .modal-bg.open { opacity:1; pointer-events:all; }
+    .modal-box { background:var(--white); border-radius:var(--radius-lg); padding:22px; width:92%; max-width:520px; max-height:90vh; overflow-y:auto; transform:scale(0.93); transition:transform 0.22s; box-shadow:var(--shadow-lg); }
+    .modal-bg.open .modal-box { transform:scale(1); }
+    .modal-hd { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+    .modal-hd h3 { font-family:'Suwannaphum',serif; font-size:1.5rem; font-weight:900; color:var(--text-dark); }
+    .modal-close { width:28px; height:28px; border-radius:50%; border:none; background:#f5f5f5; cursor:pointer; font-size:1.5rem; }
+    .fg { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .ff { margin-bottom:11px; }
+    .ff label { display:block; font-size:1.2rem; font-weight:700; color:var(--text-dark); margin-bottom:3px; }
+    .ff label .req { color:#ef4444; }
+    .ff input,.ff select,.ff textarea { width:100%; padding:8px 10px; border:1.5px solid #e8e8e8; border-radius:var(--radius-sm); font-family:'Suwannaphum',serif; font-size:1.20rem; color:var(--text-dark); background:#fafafa; outline:none; transition:border-color 0.18s; box-sizing:border-box; }
+    .ff input:focus,.ff select:focus,.ff textarea:focus { border-color:var(--green-main); background:var(--white); }
+    .ff small { font-size:0.68rem; color:var(--text-light); margin-top:2px; display:block; }
+    .btn-submit { width:100%; padding:10px; background:var(--green-main); color:white; border:none; border-radius:var(--radius-sm); font-family:'Suwannaphum',serif; font-size:1.20rem; font-weight:700; cursor:pointer; transition:background 0.18s; margin-top:4px; display:flex; align-items:center; justify-content:center; gap:7px; }
+    .btn-submit:hover { background:var(--green-dark); }
+    .btn-submit:disabled { opacity:0.6; cursor:not-allowed; }
+    .confirm-box { max-width:380px; text-align:center; padding:28px; }
+    .confirm-icon { font-size:2.5rem; margin-bottom:12px; }
+    .confirm-title { font-family:'Suwannaphum',serif; font: size 1.75em; font-weight:700; color:var(--text-dark); margin-bottom:6px; }
+    .confirm-sub { font-size:1.125rem; color:var(--text-light); margin-bottom:20px; }
+    .confirm-btns { display:flex; gap:10px; }
+    .btn-cancel { flex:1; padding:10px; background:#f5f5f5; color:var(--text-medium); border:none; border-radius:var(--radius-sm); font-family:'Suwannaphum',serif; font-size:1.125rem; font-weight:700; cursor:pointer; }
+    .btn-cancel:hover { background:#e8e8e8; }
+    .btn-confirm-del { flex:1; padding:10px; background:#ef4444; color:white; border:none; border-radius:var(--radius-sm); font-family:'Suwannaphum',serif; font-size:1.125rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; }
+    .btn-confirm-del:hover { background:#dc2626; }
+
+    #fab { display:none; position:fixed; bottom:26px; right:26px; z-index:999; width:50px; height:50px; border-radius:50%; background:var(--green-main); color:white; border:none; font-size:1.125rem; cursor:pointer; box-shadow:0 6px 20px rgba(61,122,53,0.4); transition:transform 0.18s; }
+    #fab:hover { transform:scale(1.1); }
+
+    @media(max-width:900px) {
+      .page-wrap { grid-template-columns:1fr; padding-top:88px; }
+      .sidebar { position:static; }
+      .fg { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-root"></div>
+
+  <div class="page-wrap">
+    <aside class="sidebar">
+      <div class="sb-card">
+        <div class="sb-title"><i class="fa-solid fa-layer-group"></i> ប្រភេទ</div>
+        <div class="cat-list">
+          <button class="cat-btn active" data-cat="" onclick="filterCat('',this)"> ទាំងអស់ <span class="cat-cnt" id="cnt-all">—</span></button>
+          <button class="cat-btn" data-cat="rice"    onclick="filterCat('rice',this)"> បាយ <span class="cat-cnt" id="cnt-rice">—</span></button>
+          <button class="cat-btn" data-cat="soup"    onclick="filterCat('soup',this)"> សម្ល <span class="cat-cnt" id="cnt-soup">—</span></button>
+          <button class="cat-btn" data-cat="drink"   onclick="filterCat('drink',this)"> ភេសជ្ជ: <span class="cat-cnt" id="cnt-drink">—</span></button>
+          <button class="cat-btn" data-cat="meat"    onclick="filterCat('meat',this)"> ឆា <span class="cat-cnt" id="cnt-meat">—</span></button>
+          <button class="cat-btn" data-cat="seafood" onclick="filterCat('seafood',this)"> អាំង <span class="cat-cnt" id="cnt-seafood">—</span></button>
+          <button class="cat-btn" data-cat="dessert" onclick="filterCat('dessert',this)"> បង្អែម <span class="cat-cnt" id="cnt-dessert">—</span></button>
+          <button class="cat-btn" data-cat="snack"   onclick="filterCat('snack',this)"> អាហារសម្រន់ <span class="cat-cnt" id="cnt-snack">—</span></button>
+        </div>
+      </div>
+      <div class="sb-card">
+        <div class="sb-title"><i class="fa-solid fa-signal"></i> កម្រិត (Posts)</div>
+        <div class="cat-list">
+          <button class="cat-btn" data-diff="" onclick="filterDiff('',this)"> ទាំងអស់</button>
+          <button class="cat-btn" data-diff="easy"   onclick="filterDiff('easy',this)"> ងាយ</button>
+          <button class="cat-btn" data-diff="medium" onclick="filterDiff('medium',this)"> មធ្យម</button>
+          <button class="cat-btn" data-diff="hard"   onclick="filterDiff('hard',this)"> លំបាក</button>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="toolbar">
+        <span class="tb-title">ផលិតផល</span>
+        <span class="tb-count" id="tb-count">កំពុងផ្ទុក…</span>
+        <div class="tb-gap"></div>
+        <div class="tb-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="tb-q" type="text" placeholder="ស្វែងរក..." oninput="debounceSearch(this.value)" onkeydown="if(event.key==='Enter')doSearch(this.value)"/>
+        </div>
+        <select class="sort-sel" onchange="doSort(this.value)">
+          <option value="">តម្រៀប</option>
+          <option value="newest">ថ្មីបំផុត</option>
+          <option value="popular">ពេញនិយម</option>
+          <option value="rating">ពិន្ទុ</option>
+          <option value="name">ឈ្មោះ ក-អ</option>
+        </select>
+        <div class="create-btns" id="create-btns" style="display:none;">
+          <button class="cbtn cbtn-post" onclick="openModal('m-create')">
+            <i class="fa-solid fa-pen"></i> ចែករំលែករូបមន្ត
+          </button>
+        </div>
+      </div>
+
+      <div class="tab-pills">
+        <button class="filter-btn active" id="tab-posts"       onclick="switchTab('posts',this)"><i class="fa-solid fa-users"></i> រូបមន្ត</button>
+        <button class="filter-btn"        id="tab-food-items"  onclick="switchTab('food-items',this)"><i class="fa-solid fa-utensils"></i> ម្ហូប</button>
+        <button class="filter-btn"        id="tab-restaurants" onclick="switchTab('restaurants',this)"><i class="fa-solid fa-store"></i> ភោជនីយដ្ឋាន</button>
+      </div>
+
+      <div class="food-grid" id="grid">
+        <div class="skel" style="height:220px;"></div><div class="skel" style="height:220px;"></div>
+        <div class="skel" style="height:220px;"></div><div class="skel" style="height:220px;"></div>
+        <div class="skel" style="height:220px;"></div><div class="skel" style="height:220px;"></div>
+        <div class="skel" style="height:220px;"></div><div class="skel" style="height:220px;"></div>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </main>
+  </div>
+
+  <!-- ════ MODAL: Create Recipe Post ════ -->
+  <div class="modal-bg" id="m-create" onclick="if(event.target===this)closeModal('m-create')">
+    <div class="modal-box">
+      <div class="modal-hd">
+        <h3><i class="fa-solid fa-pen" style="color:var(--green-main);"></i> ចែករំលែករូបមន្ត</h3>
+        <button class="modal-close" onclick="closeModal('m-create')">✕</button>
+      </div>
+      <form id="form-post" onsubmit="submitPost(event)">
+        <div class="ff"><label>ចំណងជើង <span class="req">*</span></label><input id="p-title" required placeholder="ឈ្មោះរូបមន្ត"/></div>
+        <div class="ff"><label>ការពិពណ៌នា</label><textarea id="p-desc" rows="2" placeholder="ពណ៌នា..."></textarea></div>
+        <div class="fg">
+          <div class="ff"><label>ពេលចម្អិន (ន')</label><input id="p-time" type="number" placeholder="30"/></div>
+          <div class="ff"><label>សម្រាប់ (នាក់)</label><input id="p-serv" type="number" placeholder="4"/></div>
+        </div>
+        <div class="ff"><label>កម្រិត</label>
+          <select id="p-diff">
+            <option value="easy"> ងាយ</option>
+            <option value="medium" selected> មធ្យម</option>
+            <option value="hard"> លំបាក</option>
+          </select>
+        </div>
+        <div class="ff"><label>គ្រឿងផ្សំ</label><input id="p-ing" placeholder="ស្ករ, អំបិល, ប្រេង"/><small>comma separated</small></div>
+        <div class="ff"><label>វិធីធ្វើ</label><textarea id="p-steps" rows="4" placeholder="ជំហានទី 1: ...&#10;ជំហានទី 2: ..."></textarea><small>1 ជំហាន = 1 line</small></div>
+        <div class="ff"><label>ស្លាក</label><input id="p-tags" placeholder="ខ្មែរ, ឆ្ងាញ់"/><small>comma separated</small></div>
+        <div class="ff"><label>URL រូបភាព</label><input id="p-img" type="url" placeholder="https://..."/></div>
+        <button type="submit" class="btn-submit" id="btn-post">
+          <i class="fa-solid fa-paper-plane"></i> ផ្ញើរូបមន្ត
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ════ MODAL: Confirm Delete ════ -->
+  <div class="modal-bg" id="m-confirm" onclick="if(event.target===this)closeModal('m-confirm')">
+    <div class="modal-box confirm-box">
+      <div class="confirm-icon"><i class="fa-solid fa-trash" style="color: rgb(27, 105, 12);"></i></div>
+      <div class="confirm-title" id="confirm-title">តើអ្នកចង់លុបមែនទេ?</div>
+      <div class="confirm-sub" id="confirm-sub">សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ</div>
+      <div class="confirm-btns">
+        <button class="btn-cancel" onclick="closeModal('m-confirm')">បោះបង់</button>
+        <button class="btn-confirm-del" id="btn-do-delete"><i class="fa-solid fa-trash"></i> លុប</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="footer-root"></div>
+
+  <script src="/src/services/api.js"></script>
+  <script src="/src/components/Navbar.js"></script>
+  <script src="/src/components/Footer.js"></script>
+  <script>
+  const STATE = { tab:'posts', page:1, limit:12, query:'', cat:'', diff:'', sort:'', data:[] };
+  const FOOD_FB = ['https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80','https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80','https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&q=80'];
+  const REST_FB = ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=80','https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&q=80'];
+
+  // Food favorites (API-backed)
+  const FAV_SET = { foods: new Set() };
+
+  // Post saves (localStorage, per user)
+  function _savedKey() { const u=Auth.getUser(); return u?`mhob_saved_posts_${u.id}`:'mhob_saved_posts_guest'; }
+  function getSavedPosts() { try{return new Set(JSON.parse(localStorage.getItem(_savedKey())||'[]'));}catch(_){return new Set();} }
+  function setSavedPost(id, save) { const s=getSavedPosts(); save?s.add(id):s.delete(id); localStorage.setItem(_savedKey(), JSON.stringify([...s])); }
+
+  function goodImg(url,fb){return(!url||url==='string'||url==='null'||url.includes('example.com'))?fb[Math.floor(Math.random()*fb.length)]:url;}
+  function stars(r){const f=Math.round(r||0);return'★'.repeat(Math.min(5,f))+'☆'.repeat(Math.max(0,5-f));}
+  function trunc(s,n){s=s||'';return s.length>n?s.slice(0,n)+'…':s;}
+  function numVal(id){const v=parseFloat(document.getElementById(id)?.value);return(isNaN(v)||v<=0)?null:v;}
+  function strVal(id){return(document.getElementById(id)?.value||'').trim();}
+
+  /* ── Load food fav set only ── */
+  async function loadFavSets() {
+    if (!Auth.isLoggedIn()) return;
+    try {
+      const foods = await FavoritesAPI.getFoods(0,200);
+      FAV_SET.foods = new Set((foods||[]).map(f=>f.food_item_id||f.id));
+    } catch(_) {}
+  }
+
+  /* ── Toggle fav: food only (API) ── */
+  async function toggleCardFav(e, type, id) {
+    e.stopPropagation();
+    if (!Auth.isLoggedIn()) { showToast('សូមចូលគណនីដើម្បីរក្សាទុក','info'); return; }
+    const btn = e.currentTarget;
+    const isFaved = btn.classList.contains('faved');
+    btn.style.opacity = '0.5';
+    try {
+      if (type==='food') {
+        isFaved ? (await FavoritesAPI.removeFood(id), FAV_SET.foods.delete(id)) : (await FavoritesAPI.addFood(id), FAV_SET.foods.add(id));
+      }
+      btn.classList.toggle('faved', !isFaved);
+      btn.innerHTML = !isFaved ? '<i class="fa-solid fa-heart"></i>' : '<i class="fa-regular fa-heart"></i>';
+      showToast(!isFaved ? 'បានរក្សាទុក ' : 'បានដកចេញ', !isFaved ? 'success' : 'info');
+    } catch(err) { showToast(err.message||'មានបញ្ហា','error'); }
+    finally { btn.style.opacity = '1'; }
+  }
+
+  /* ── Toggle save: post (localStorage) ── */
+  function togglePostSave(e, id) {
+    e.stopPropagation();
+    if (!Auth.isLoggedIn()) { showToast('សូមចូលគណនីដើម្បីរក្សាទុក','info'); return; }
+    const btn    = e.currentTarget;
+    const isSaved = btn.classList.contains('faved');
+    setSavedPost(id, !isSaved);
+    btn.classList.toggle('faved', !isSaved);
+    btn.innerHTML = !isSaved ? '<i class="fa-solid fa-heart"></i>' : '<i class="fa-regular fa-heart"></i>';
+    showToast(!isSaved ? 'បានរក្សាទុក ' : 'បានដកចេញ', !isSaved ? 'success' : 'info');
+  }
+
+  /* ════ CARD BUILDERS ════ */
+  function postCard(p) {
+    const img    = goodImg(p.image_url, FOOD_FB);
+    const url    = `/src/pages/Product_details/detail.html?type=post&id=${p.id}`;
+    const dc     = { easy:'var(--green-main)', medium:'var(--gold)', hard:'#ef4444' };
+    const dl     = { easy:'ងាយ', medium:'មធ្យម', hard:'លំបាក' };
+    const d      = p.difficulty_level || '';
+    const saved   = Auth.isLoggedIn() && getSavedPosts().has(p.id);
+    const favIcon  = saved ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+    const favClass = saved ? 'faved' : '';
+    const tagRight = Auth.isLoggedIn() ? 'right:42px' : 'right:7px';
+    return `<div class="food-card" onclick="location.href='${url}'" style="cursor:pointer;">
+      ${Auth.isLoggedIn()?`<button class="card-fav-btn ${favClass}" onclick="togglePostSave(event,'${p.id}')" title="រក្សាទុក"><i class="${favIcon}"></i></button>`:''}
+      <div class="food-card-img" style="position:relative;overflow:hidden;">
+        <img src="${img}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.src='${FOOD_FB[0]}'"/>
+        ${d?`<span style="position:absolute;top:7px;left:7px;background:${dc[d]};color:white;font-size:1.125rem;font-weight:700;padding:2px 7px;border-radius:20px;">${dl[d]}</span>`:''}
+        ${(p.tags||[]).length?`<span style="position:absolute;top:7px;${tagRight};background:rgba(0,0,0,0.5);color:white;font-size:1.125rem;padding:2px 6px;border-radius:20px;">${p.tags[0]}</span>`:''}
+      </div>
+      <div class="food-card-body">
+        <div class="food-card-title">${p.title||'—'}</div>
+        <div class="food-card-desc">${trunc(p.description,68)}</div>
+        <div class="food-card-footer">
+          <span class="food-card-views"><i class="fa-regular fa-heart" style="color:#ef4444;font-size:1.20rem;"></i> ${p.likes_count||0}${p.cooking_time_minutes?` · <i class="fa-regular fa-clock" style="font-size:1.125rem;"></i> ${p.cooking_time_minutes}ន'`:''}</span>
+          <button class="food-card-btn" onclick="event.stopPropagation();location.href='${url}'">មើល</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function foodCard(f) {
+    const img      = goodImg(f.image_url, FOOD_FB);
+    const url      = `/src/pages/Product_details/detail.html?type=food&id=${f.id}`;
+    const isFaved  = FAV_SET.foods.has(f.id);
+    const favIcon  = isFaved ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+    const favClass = isFaved ? 'faved' : '';
+    return `<div class="food-card" onclick="location.href='${url}'" style="cursor:pointer;">
+      ${Auth.isLoggedIn()?`<button class="card-fav-btn ${favClass}" onclick="toggleCardFav(event,'food','${f.id}')" title="រក្សាទុក"><i class="${favIcon}"></i></button>`:''}
+      <div class="food-card-img" style="position:relative;overflow:hidden;">
+        <img src="${img}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.src='${FOOD_FB[0]}'"/>
+        ${f.is_trending?`<span style="position:absolute;top:7px;left:7px;background:linear-gradient(135deg,#ef4444,#f59e0b);color:white;font-size:1.125rem;font-weight:700;padding:2px 7px;border-radius:20px;"> ពេញ</span>`:''}
+        ${f.price?`<span style="position:absolute;bottom:7px;right:7px;background:var(--green-main);color:white;font-size:1.125rem;font-weight:700;padding:2px 7px;border-radius:20px;">$${parseFloat(f.price).toFixed(2)}</span>`:''}
+      </div>
+      <div class="food-card-body">
+        <div class="food-card-title">${f.name||'—'}</div>
+        <div class="food-card-desc">${trunc(f.description,68)}</div>
+        <div class="food-card-footer">
+          <span class="food-stars">${stars(f.average_rating)}</span>
+          <button class="food-card-btn" onclick="event.stopPropagation();location.href='${url}'">មើល</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  /* ── Restaurant card: NO favorite button ── */
+  function restCard(r) {
+    const img      = goodImg(r.image_url, REST_FB);
+    const url      = `/src/pages/Product_details/detail.html?type=restaurant&id=${r.id}`;
+    const cuisine  = (r.cuisine_types||[]).filter(c=>c&&c!=='string').slice(0,2).join(', ')||'ម្ហូប';
+    const price    = (r.price_range&&r.price_range!=='string')?r.price_range:'';
+    return `<div class="food-card" onclick="location.href='${url}'" style="cursor:pointer;">
+      <div class="food-card-img" style="position:relative;overflow:hidden;">
+        <img src="${img}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.src='${REST_FB[0]}'"/>
+        ${r.is_trending?`<span style="position:absolute;top:7px;left:7px;background:linear-gradient(135deg,#ef4444,#f59e0b);color:white;font-size:1.125rem;font-weight:700;padding:2px 7px;border-radius:20px;"> ពេញ</span>`:''}
+        ${price?`<span style="position:absolute;bottom:7px;right:7px;background:var(--green-dark);color:white;font-size:1.125rem;font-weight:700;padding:2px 7px;border-radius:20px;">${price}</span>`:''}
+      </div>
+      <div class="food-card-body">
+        <div class="food-card-title">${r.name||'—'}</div>
+        <div class="food-card-desc">${cuisine}</div>
+        <div class="food-card-footer">
+          <span class="food-stars">${stars(r.average_rating)} <span style="font-size:1.125rem;color:var(--text-light);">(${r.rating_count||0})</span></span>
+          <button class="food-card-btn" onclick="event.stopPropagation();location.href='${url}'">មើល</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  /* ── Filter / sort / render ── */
+  function applyFilter(items){
+    let r=[...items];
+    if(STATE.query){const q=STATE.query.toLowerCase();r=r.filter(i=>(i.title||i.name||'').toLowerCase().includes(q)||(i.description||'').toLowerCase().includes(q));}
+    if(STATE.cat) r=r.filter(i=>(i.category||'').toLowerCase().includes(STATE.cat)||(i.cuisine||'').toLowerCase().includes(STATE.cat)||(i.cuisine_types||[]).join(' ').toLowerCase().includes(STATE.cat));
+    if(STATE.diff&&STATE.tab==='posts') r=r.filter(i=>i.difficulty_level===STATE.diff);
+    if(STATE.sort==='newest')  r.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+    if(STATE.sort==='popular') r.sort((a,b)=>(b.likes_count||b.popularity_score||0)-(a.likes_count||a.popularity_score||0));
+    if(STATE.sort==='rating')  r.sort((a,b)=>(b.average_rating||0)-(a.average_rating||0));
+    if(STATE.sort==='name')    r.sort((a,b)=>(a.title||a.name||'').localeCompare(b.title||b.name||''));
+    return r;
+  }
+  function renderGrid(items){
+    const g=document.getElementById('grid');if(!g)return;
+    if(!items.length){g.innerHTML=`<div style="grid-column:1/-1;background:white;border-radius:var(--radius-md);padding:50px 24px;text-align:center;box-shadow:var(--shadow-sm);"><div style="font-size:3rem;margin-bottom:10px;"></div><p style="color:var(--text-light);font-size:1.20rem;">${STATE.data.length===0?'មិនទាន់មានទិន្នន័យ':'រកមិនឃើញ — ប្ដូរតម្រង'}</p></div>`;return;}
+    if(STATE.tab==='posts')            g.innerHTML=items.map(postCard).join('');
+    else if(STATE.tab==='food-items')  g.innerHTML=items.map(foodCard).join('');
+    else if(STATE.tab==='restaurants') g.innerHTML=items.map(restCard).join('');
+  }
+  function renderPagination(total){
+    const pages=Math.ceil(total/STATE.limit),el=document.getElementById('pagination');
+    if(!el||pages<=1){if(el)el.innerHTML='';return;}
+    const c=STATE.page;
+    const range=pages<=7?Array.from({length:pages},(_,i)=>i+1):c<=4?[1,2,3,4,5,'…',pages]:c>=pages-3?[1,'…',pages-4,pages-3,pages-2,pages-1,pages]:[1,'…',c-1,c,c+1,'…',pages];
+    el.innerHTML=`<button class="pg-btn" onclick="goPage(${c-1})" ${c===1?'disabled':''}><i class="fa-solid fa-chevron-left" style="font-size:1.125rem;"></i></button>${range.map(p=>p==='…'?`<span style="align-self:center;color:var(--text-light);padding:0 4px;">…</span>`:`<button class="pg-btn ${p===c?'active':''}" onclick="goPage(${p})">${p}</button>`).join('')}<button class="pg-btn" onclick="goPage(${c+1})" ${c===pages?'disabled':''}><i class="fa-solid fa-chevron-right" style="font-size:1.125rem;"></i></button>`;
+  }
+  function updateCounts(filtered){
+    document.getElementById('tb-count').textContent=`${filtered.length} ${STATE.tab==='posts'?'រូបមន្ត':STATE.tab==='food-items'?'ម្ហូប':'ភោជនីយដ្ឋាន'}`;
+    const counts={all:filtered.length};
+    filtered.forEach(i=>{const k=(i.category||i.cuisine||'').toLowerCase().replace(/\s/g,'');if(k&&k!=='string')counts[k]=(counts[k]||0)+1;});
+    document.querySelectorAll('.cat-btn[data-cat]').forEach(btn=>{const key=btn.dataset.cat||'all';const cnt=document.getElementById(`cnt-${key}`);if(cnt)cnt.textContent=counts[key]??'—';});
+  }
+  async function loadTab(tab){
+    STATE.tab=tab;STATE.page=1;STATE.query='';STATE.cat='';STATE.diff='';
+    const g=document.getElementById('grid');
+    g.innerHTML=Array(8).fill('<div class="skel" style="height:220px;"></div>').join('');
+    document.getElementById('pagination').innerHTML='';
+    document.getElementById('tb-count').textContent='កំពុងផ្ទុក…';
+    try{
+      let raw=[];
+      if(tab==='posts')            raw=await FoodPostsAPI.list(0,100);
+      else if(tab==='food-items')  { await loadFavSets(); raw=await FoodItemsAPI.list(0,100); }
+      else if(tab==='restaurants') raw=await RestaurantsAPI.list(0,100);
+      STATE.data=Array.isArray(raw)?raw:[];
+      const filtered=applyFilter(STATE.data);
+      updateCounts(filtered);renderPagination(filtered.length);renderGrid(filtered.slice(0,STATE.limit));
+      document.getElementById('tb-q').value='';
+    }catch(e){
+      g.innerHTML=`<div style="grid-column:1/-1;background:white;border-radius:var(--radius-md);padding:50px;text-align:center;"> ${e.message}</div>`;
+    }
+  }
+  function switchTab(tab,btn){document.querySelectorAll('.tab-pills .filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');loadTab(tab);}
+  function filterCat(cat,btn){document.querySelectorAll('.cat-btn[data-cat]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');STATE.cat=cat;STATE.page=1;render();}
+  function filterDiff(diff,btn){const was=btn.classList.contains('active');document.querySelectorAll('.cat-btn[data-diff]').forEach(b=>b.classList.remove('active'));STATE.diff=was?'':diff;STATE.page=1;if(!was)btn.classList.add('active');render();}
+  let _st;function debounceSearch(q){clearTimeout(_st);_st=setTimeout(()=>doSearch(q),350);}
+  function doSearch(q){STATE.query=q;STATE.page=1;document.getElementById('tb-q').value=q;render();}
+  function doSort(s){STATE.sort=s;render();}
+  function goPage(p){STATE.page=p;window.scrollTo({top:120,behavior:'smooth'});render();}
+  function render(){const filtered=applyFilter(STATE.data);const start=(STATE.page-1)*STATE.limit;updateCounts(filtered);renderPagination(filtered.length);renderGrid(filtered.slice(start,start+STATE.limit));}
+  function openModal(id){document.getElementById(id)?.classList.add('open');}
+  function closeModal(id){document.getElementById(id)?.classList.remove('open');}
+
+  /* ── Submit Recipe ── */
+  async function submitPost(e){
+    e.preventDefault();
+    if(!Auth.isLoggedIn()){showToast('សូមចូលគណនីជាមុនសិន!','warning');setTimeout(()=>location.href='/src/pages/Login_Page/login.html',1200);return;}
+    const title=strVal('p-title');
+    if(!title){showToast('សូមបញ្ចូលចំណងជើង!','warning');return;}
+    const btn=document.getElementById('btn-post');
+    btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> កំពុងផ្ញើ...';
+    try{
+      const ing=strVal('p-ing').split(',').map(s=>s.trim()).filter(Boolean);
+      const steps=strVal('p-steps').split('\n').map(s=>s.trim()).filter(Boolean);
+      const tags=strVal('p-tags').split(',').map(s=>s.trim()).filter(Boolean);
+      const img=strVal('p-img');
+      const body={
+        title, description:strVal('p-desc')||'', recipe:steps.join('\n'),
+        cooking_time_minutes:parseInt(document.getElementById('p-time')?.value)||0,
+        servings:parseInt(document.getElementById('p-serv')?.value)||0,
+        ingredients:ing, step_to_cook:steps,
+        difficulty_level:strVal('p-diff')||'medium',
+        tags, image_url:img.startsWith('http')?img:'',
+      };
+      const res=await FoodPostsAPI.create(body);
+      showToast(`រូបមន្ត "${res?.title||title}" បានបង្ហោះ `,'success');
+      closeModal('m-create');document.getElementById('form-post').reset();
+      const tabBtn=document.getElementById('tab-posts');
+      document.querySelectorAll('.tab-pills .filter-btn').forEach(b=>b.classList.remove('active'));
+      tabBtn.classList.add('active');loadTab('posts');
+    }catch(err){showToast(err.message||'មានបញ្ហា','error');console.error('submitPost error:',err);}
+    finally{btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-paper-plane"></i> ផ្ញើរូបមន្ត';}
+  }
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    if(Auth.isLoggedIn()){document.getElementById('create-btns').style.display='flex';document.getElementById('fab').style.display='flex';}
+    const p=new URLSearchParams(location.search),tab=p.get('tab')||'posts',q=p.get('q')||'';
+    document.querySelectorAll('.tab-pills .filter-btn').forEach(b=>b.classList.remove('active'));
+    const activeTab=document.getElementById(`tab-${tab}`);if(activeTab)activeTab.classList.add('active');
+    loadTab(tab).then(()=>{if(q)doSearch(q);});
+    const tq=document.getElementById('tb-q');
+    if(tq){tq.addEventListener('input',()=>{debounceSearch(tq.value);});}
+  });
+  </script>
+</body>
+</html>

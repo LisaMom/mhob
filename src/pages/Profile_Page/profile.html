@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile — Mhob</title>
+  <link rel="stylesheet" href="../../css/style.css"/>
+  
+  <meta name="description" content="ស្វែងយល់អំពីម្ហូបខ្មែរប្រពៃណី រស់ជាតិពិតប្រាកដ និងរូបមន្តដែលបានបន្តពីជំនាន់មួយទៅជំនាន់មួយ។"/>
+  <meta name="keywords" content="ម្ហូបខ្មែរ, អាហារខ្មែរ, រូបមន្តខ្មែរ, Khmer food, Cambodian cuisine"/>
+  <meta name="author" content="ម្ហូបខ្មែរ" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mhob Khmer" />
+  <meta property="og:description" content="ស្វែងយល់អំពីម្ហូបខ្មែរប្រពៃណី រស់ជាតិពិតប្រាកដ និងរូបមន្តដែលបានបន្តពីជំនាន់មួយទៅជំនាន់មួយ។"/>
+  <meta property="og:url" content="https://yourdomain.com/" />
+  <meta property="og:image" content="../../assets/image.png" />
+  <meta property="og:image:alt" content="Traditional Khmer food with fresh ingredients served in banana leaf" />
+  <meta property="og:locale" content="km_KH" />
+  
+  <style>
+    .profile-page { max-width: 960px; margin: 0 auto; padding: 90px 24px 60px; }
+
+    /* ── Top card ── */
+    .profile-top-card { background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+    .profile-banner { height: 110px; background: linear-gradient(135deg, var(--green-dark), var(--green-main), var(--gold)); }
+    .profile-header-body { padding: 0 28px 20px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .profile-avatar-wrap { margin-top: -44px; }
+    .profile-avatar { width: 88px; height: 88px; border-radius: 50%; border: 4px solid var(--white); overflow: hidden; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: var(--green-main); box-shadow: var(--shadow-md); flex-shrink: 0; }
+    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .profile-name { font-family: 'Suwannaphum', serif; font-size: 1.75rem; font-weight: 900; color: var(--text-dark); margin-top: 8px; }
+    .profile-username { font-size: 1.125rem; color: var(--text-light); margin-top: 2px; }
+    .profile-role-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--green-light); color: var(--green-main); font-size: 1.125rem; font-weight: 700; padding: 3px 10px; border-radius: var(--radius-full); margin-top: 6px; }
+    .profile-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-edit-profile { display: flex; align-items: center; gap: 6px; padding: 8px 18px; border: 1.5px solid var(--green-main); border-radius: var(--radius-full); background: var(--white); color: var(--green-main); font-family: 'Suwannaphum', serif; font-size: 1.125rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-edit-profile:hover { background: var(--green-main); color: white; }
+    .btn-logout-profile { display: flex; align-items: center; gap: 6px; padding: 8px 18px; border: 1.5px solid #fecaca; border-radius: var(--radius-full); background: var(--white); color: #ef4444; font-family: 'Suwannaphum', serif; font-size: 1.125rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-logout-profile:hover { background: #fef2f2; }
+
+    /* Stats */
+    .profile-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid #f0f0f0; }
+    .profile-stat { padding: 14px 10px; text-align: center; border-right: 1px solid #f0f0f0; }
+    .profile-stat:last-child { border-right: none; }
+    .profile-stat-num { font-family: 'Suwannaphum', serif; font-size: 1.75rem; font-weight: 900; color: var(--green-main); }
+    .profile-stat-lbl { font-size: 1.125rem; color: var(--text-light); margin-top: 2px; }
+
+    /* Tabs */
+    .profile-tabs { display: flex; gap: 6px; background: var(--white); border-radius: var(--radius-md); padding: 6px; margin-bottom: 20px; box-shadow: var(--shadow-sm); }
+    .profile-tab-btn { flex: 1; padding: 9px 12px; border: none; border-radius: var(--radius-sm); background: transparent; font-family: 'Suwannaphum', serif; font-size: 1.125rem; font-weight: 600; color: var(--text-light); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .profile-tab-btn.active { background: var(--green-main); color: white; box-shadow: 0 3px 10px rgba(61,122,53,0.25); }
+    .profile-tab-btn:hover:not(.active) { background: var(--green-light); color: var(--green-main); }
+
+    /* Panels */
+    .profile-panel { display: none; }
+    .profile-panel.active { display: block; }
+
+    /* Info card */
+    .info-section-card { background: var(--white); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); }
+    .info-section-title { font-family: 'Suwannaphum', serif; font-size: 1.125rem; font-weight: 700; color: var(--text-dark); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .info-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
+    .info-row:last-child { border-bottom: none; }
+    .info-icon { width: 34px; height: 34px; border-radius: var(--radius-sm); background: var(--green-light); display: flex; align-items: center; justify-content: center; color: var(--green-main); font-size: 1.125rem; flex-shrink: 0; }
+    .info-label { font-size: 1.125rem; color: var(--text-light); }
+    .info-value { font-size: 1.125rem; font-weight: 600; color: var(--text-dark); }
+
+    /* Food grid */
+    .food-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .food-card { position: relative; background: var(--white); border-radius: var(--radius-md, 10px); overflow: hidden; border: 1px solid #e5e5e5; box-shadow: var(--shadow-sm, 0 1px 4px rgba(0,0,0,0.08)); cursor: pointer; transition: transform 0.18s, box-shadow 0.18s; }
+    .food-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+    .food-card-img { width: 100%; height: 160px; overflow: hidden; background: #f0f0f0; position: relative; }
+    .food-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .food-card-body { padding: 10px 12px 12px; }
+    .food-card-title { font-family: 'Suwannaphum', serif; font-size: 1.125rem; font-weight: 700; color: var(--text-dark, #111); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .food-card-desc { font-size: 1.125rem; color: var(--text-light, #888); line-height: 1.45; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .food-card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .food-card-views { font-size: 1.125rem; color: var(--text-light, #888); }
+    .food-stars { font-size: 1.125rem; color: #f59e0b; }
+    .food-card-btn { padding: 4px 10px; background: var(--color-green-700, #3d7a35); color: white; border: none; border-radius: 20px; font-family: 'Suwannaphum', serif; font-size: 1.125rem; font-weight: 700; cursor: pointer; transition: background 0.18s; }
+    .food-card-btn:hover { background: var(--green-dark, #2d5e28); }
+
+    .card-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 5px; z-index: 10; }
+    .card-act-btn { width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.125rem; transition: transform 0.18s, background 0.18s, color 0.18s; box-shadow: 0 2px 8px rgba(0,0,0,0.18); background: white; }
+    .card-act-btn:hover { transform: scale(1.15); }
+    .card-act-btn i { pointer-events: none; }
+    .card-act-fav { color: #ef4444; }
+    .card-act-fav:hover, .card-act-fav.faved { background: #ef4444; color: white; }
+    .card-act-del { color: #ef4444; }
+    .card-act-del:hover { background: #ef4444; color: white; }
+
+    .panel-empty { text-align: center; padding: 48px; color: var(--text-light); background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); grid-column: 1 / -1; }
+    .panel-empty .empty-icon { font-size: 3.25rem; margin-bottom: 10px; opacity: 0.25; }
+
+    /* Confirm modal */
+    .confirm-modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.45); backdrop-filter: blur(4px); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.22s; }
+    .confirm-modal-bg.open { opacity: 1; pointer-events: all; }
+    .confirm-modal-box { background: var(--white); border-radius: var(--radius-lg); padding: 28px; width: 90%; max-width: 360px; text-align: center; transform: scale(0.93); transition: transform 0.22s; box-shadow: var(--shadow-lg); }
+    .confirm-modal-bg.open .confirm-modal-box { transform: scale(1); }
+    .confirm-icon { font-size: 2.75rem; margin-bottom: 12px; }
+    .confirm-title { font-family: 'Suwannaphum', serif; font-size: 1.25rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+    .confirm-sub { font-size: 1.125rem; color: var(--text-light); margin-bottom: 20px; }
+    .confirm-btns { display: flex; gap: 10px; }
+    .btn-cancel { flex: 1; padding: 10px; background: #f5f5f5; color: var(--text-medium); border: none; border-radius: var(--radius-sm); font-family: 'Suwannaphum', serif; font-size: 1.125rem; font-weight: 700; cursor: pointer; }
+    .btn-cancel:hover { background: #e8e8e8; }
+    .btn-confirm-del { flex: 1; padding: 10px; background: #ef4444; color: white; border: none; border-radius: var(--radius-sm); font-family: 'Suwannaphum', serif; font-size: 1.125rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-confirm-del:hover { background: #dc2626; }
+
+    /* ENHANCED EDIT MODAL */
+    .profile-modal-bg {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .profile-modal-bg.open { opacity: 1; pointer-events: all; }
+
+    .profile-modal-box {
+      background: var(--white);
+      border-radius: 20px;
+      width: 90%; max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.92) translateY(20px);
+      transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+    }
+    .profile-modal-bg.open .profile-modal-box { transform: scale(1) translateY(0); }
+
+    .modal-header {
+      padding: 22px 24px 0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-header h3 {
+      font-family: 'Suwannaphum', serif;
+      font-size: 1.3rem; font-weight: 900;
+      color: var(--text-dark);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .modal-close-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%; border: none;
+      background: #f0f0f0; cursor: pointer;
+      font-size: 1rem; display: flex;
+      align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close-btn:hover { background: #e0e0e0; }
+
+    .modal-avatar-section {
+      margin: 18px 24px;
+      padding: 16px;
+      background: linear-gradient(135deg, #f8fdf8, #f0f9f0);
+      border: 1.5px dashed #c8e6c9;
+      border-radius: 14px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    #modal-avatar-preview {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      border: 3px solid var(--green-main);
+      overflow: hidden;
+      background: var(--green-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--green-main);
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+    #modal-avatar-preview img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    .modal-tabs {
+      display: flex; gap: 0;
+      margin: 0 24px 20px;
+      background: #f5f5f5;
+      border-radius: 10px;
+      padding: 4px;
+    }
+    .modal-tab-btn {
+      flex: 1; padding: 8px 10px;
+      border: none; border-radius: 8px;
+      background: transparent;
+      font-family: 'Suwannaphum', serif;
+      font-size: 1rem; font-weight: 600;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+    }
+    .modal-tab-btn.active {
+      background: var(--white);
+      color: var(--green-main);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-weight: 700;
+    }
+
+    .modal-panel { display: none; padding: 0 24px 24px; }
+    .modal-panel.active { display: block; }
+
+    .modal-field { margin-bottom: 14px; }
+    .modal-field label {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 1rem; font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+    .modal-field label i { color: var(--green-main); font-size: 0.9rem; }
+    .modal-field input {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid #e8e8e8;
+      border-radius: 10px;
+      font-family: 'Suwannaphum', serif;
+      font-size: 1rem; color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fafafa;
+      box-sizing: border-box;
+    }
+    .modal-field input:focus {
+      border-color: var(--green-main);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(61,122,53,0.12);
+    }
+    .modal-field input.input-error { border-color: #ef4444; }
+    .modal-field input.input-error:focus { box-shadow: 0 0 0 3px rgba(239,68,68,0.12); }
+
+    .pwd-wrap { position: relative; }
+    .pwd-wrap input { padding-right: 44px; }
+    .pwd-toggle {
+      position: absolute; right: 12px; top: 50%;
+      transform: translateY(-50%);
+      border: none; background: none;
+      cursor: pointer; color: var(--text-light);
+      font-size: 1rem; padding: 4px;
+      transition: color 0.2s;
+    }
+    .pwd-toggle:hover { color: var(--green-main); }
+
+    .pwd-strength-bar {
+      height: 4px; border-radius: 4px;
+      background: #e8e8e8;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .pwd-strength-fill {
+      height: 100%; border-radius: 4px;
+      width: 0%; transition: width 0.3s, background 0.3s;
+    }
+    .pwd-strength-label {
+      font-size: 0.8rem; color: var(--text-light);
+      margin-top: 3px; min-height: 16px;
+    }
+
+    .field-hint { font-size: 0.82rem; color: var(--text-light); margin-top: 4px; }
+    .field-error { font-size: 0.82rem; color: #ef4444; margin-top: 4px; display: none; }
+
+    .modal-save-btn {
+      width: 100%; padding: 12px;
+      background: var(--green-main);
+      color: white; border: none;
+      border-radius: 10px;
+      font-family: 'Suwannaphum', serif;
+      font-size: 1.1rem; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 6px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .modal-save-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .modal-save-btn:active { transform: translateY(0); }
+    .modal-save-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .modal-divider { border: none; border-top: 1px solid #f0f0f0; margin: 16px 0; }
+
+    .img-upload-area {
+      border: 2px dashed #d1e7cd;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #f8fdf8;
+      position: relative;
+    }
+    .img-upload-area:hover { border-color: var(--green-main); background: #f0f9f0; }
+    .img-upload-area input[type="file"] {
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer;
+      width: 100%; height: 100%;
+    }
+    .img-upload-label {
+      font-size: 0.85rem; color: var(--text-light);
+      pointer-events: none;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+
+    /* API debug notice */
+    .api-debug-notice {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      color: #92400e;
+      margin-bottom: 12px;
+      display: none;
+    }
+    .api-debug-notice.show { display: block; }
+
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      70% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-check { animation: popIn 0.4s ease forwards; display: inline-block; }
+
+    .skeleton-card { border-radius: var(--radius-md); background: linear-gradient(90deg,#f0f0f0 25%,#e8e8e8 50%,#f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; }
+    @keyframes shimmer { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+
+    .fav-subtabs { display: flex; gap: 6px; margin-bottom: 14px; }
+    .fav-sub-btn { padding: 6px 14px; border: 1.5px solid #e8e8e8; border-radius: var(--radius-full); background: var(--white); font-family: 'Suwannaphum', serif; font-size: 1.125rem; color: var(--text-medium); cursor: pointer; transition: all 0.18s; display: flex; align-items: center; gap: 5px; }
+    .fav-sub-btn.active { background: var(--green-main); border-color: var(--green-main); color: white; font-weight: 700; }
+    .fav-sub-btn:hover:not(.active) { background: var(--green-light); color: var(--green-main); }
+
+    @media(max-width:600px) {
+      .profile-header-body { flex-direction: column; align-items: flex-start; }
+      .modal-tabs { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <div id="navbar-root"></div>
+
+  <div class="profile-page">
+
+    <!-- ── Top Profile Card ── -->
+    <div class="profile-top-card">
+      <div class="profile-banner"></div>
+      <div class="profile-header-body">
+        <div>
+          <div class="profile-avatar-wrap">
+            <div class="profile-avatar" id="profile-avatar"></div>
+          </div>
+          <div class="profile-name"     id="profile-name">—</div>
+          <div class="profile-username" id="profile-username">—</div>
+          <div class="profile-role-badge" id="profile-role"><i class="fa-solid fa-user"></i> Member</div>
+        </div>
+        <div class="profile-actions">
+          <button class="btn-edit-profile" onclick="openEditModal()">
+            <i class="fa-regular fa-pen-to-square"></i> កែប្រែ
+          </button>
+          <button class="btn-logout-profile" onclick="handleLogout()">
+            <i class="fa-solid fa-right-from-bracket"></i> ចេញ
+          </button>
+        </div>
+      </div>
+      <div class="profile-stats-row">
+        <div class="profile-stat">
+          <div class="profile-stat-num" id="stat-posts">—</div>
+          <div class="profile-stat-lbl">រូបមន្ត</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-num" id="stat-fav-foods">—</div>
+          <div class="profile-stat-lbl">ម្ហូបដែលចូលចិត្ត</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-num" id="stat-fav-rest">—</div>
+          <div class="profile-stat-lbl">ភោជនីយដ្ឋាន</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Tabs ── -->
+    <div class="profile-tabs">
+      <button class="profile-tab-btn active" onclick="switchTab('info',this)">
+        <i class="fa-regular fa-id-card"></i> ព័ត៌មាន
+      </button>
+      <button class="profile-tab-btn" onclick="switchTab('posts',this)">
+        <i class="fa-solid fa-utensils"></i> រូបមន្តខ្ញុំ
+      </button>
+      <button class="profile-tab-btn" onclick="switchTab('favorites',this)">
+        <i class="fa-regular fa-heart"></i> ចូលចិត្ត
+      </button>
+    </div>
+
+    <!-- ── Panel: Info ── -->
+    <div class="profile-panel active" id="panel-info">
+      <div class="info-section-card">
+        <div class="info-section-title">
+          <i class="fa-regular fa-id-card" style="color:var(--green-main);"></i> ព័ត៌មានផ្ទាល់ខ្លួន
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fa-regular fa-user"></i></div>
+          <div><div class="info-label">ឈ្មោះពេញ</div><div class="info-value" id="info-fullname">—</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fa-solid fa-at"></i></div>
+          <div><div class="info-label">Username</div><div class="info-value" id="info-username">—</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fa-regular fa-envelope"></i></div>
+          <div><div class="info-label">អ៊ីម៉ែល</div><div class="info-value" id="info-email">—</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fa-regular fa-calendar"></i></div>
+          <div><div class="info-label">ចូលរួមថ្ងៃ</div><div class="info-value" id="info-joined">—</div></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fa-solid fa-shield"></i></div>
+          <div><div class="info-label">តួនាទី</div><div class="info-value" id="info-role">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Panel: My Posts ── -->
+    <div class="profile-panel" id="panel-posts">
+      <div class="food-grid" id="posts-grid">
+        <div class="skeleton-card" style="height:220px;"></div>
+        <div class="skeleton-card" style="height:220px;"></div>
+        <div class="skeleton-card" style="height:220px;"></div>
+        <div class="skeleton-card" style="height:220px;"></div>
+      </div>
+    </div>
+
+    <!-- ── Panel: Favorites ── -->
+    <div class="profile-panel" id="panel-favorites">
+      <div class="fav-subtabs">
+        <button class="fav-sub-btn active" id="fsub-foods" onclick="switchFavSub('foods',this)">
+          <i class="fa-solid fa-utensils"></i> ម្ហូប
+        </button>
+        <button class="fav-sub-btn" id="fsub-restaurants" onclick="switchFavSub('restaurants',this)">
+          <i class="fa-solid fa-store"></i> ភោជនីយដ្ឋាន
+        </button>
+      </div>
+      <div class="food-grid" id="fav-grid">
+        <div class="skeleton-card" style="height:220px;"></div>
+        <div class="skeleton-card" style="height:220px;"></div>
+        <div class="skeleton-card" style="height:220px;"></div>
+        <div class="skeleton-card" style="height:220px;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Confirm Delete Modal ── -->
+  <div class="confirm-modal-bg" id="confirm-modal">
+    <div class="confirm-modal-box">
+      <div class="confirm-icon"><i class="fa-solid fa-trash" style="color: rgb(27, 105, 12);"></i></div>
+      <div class="confirm-title" id="confirm-title">លុបរូបមន្តនេះ?</div>
+      <div class="confirm-sub">សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ</div>
+      <div class="confirm-btns">
+        <button class="btn-cancel" onclick="closeConfirm()">បោះបង់</button>
+        <button class="btn-confirm-del" id="btn-do-delete"><i class="fa-solid fa-trash"></i> លុប</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENHANCED EDIT PROFILE MODAL -->
+  <div class="profile-modal-bg" id="edit-modal">
+    <div class="profile-modal-box">
+
+      <div class="modal-header">
+        <h3><i class="fa-regular fa-pen-to-square" style="color:var(--green-main);"></i> កែប្រែគណនី</h3>
+        <button class="modal-close-btn" onclick="closeEditModal()">✕</button>
+      </div>
+
+      <div class="modal-avatar-section">
+        <div id="modal-avatar-preview"></div>
+        <div>
+          <div style="font-size:1rem;font-weight:700;color:var(--text-dark);" id="modal-preview-name">—</div>
+          <div style="font-size:0.85rem;color:var(--text-light);margin-top:2px;" id="modal-preview-username">—</div>
+          <div style="font-size:0.8rem;color:var(--green-main);margin-top:4px;font-weight:600;">
+            <i class="fa-solid fa-circle" style="font-size:0.5rem;"></i> គណនីសកម្ម
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="modal-tab-btn active" onclick="switchModalTab('profile', this)">
+          <i class="fa-regular fa-user"></i> ព័ត៌មាន
+        </button>
+        <button class="modal-tab-btn" onclick="switchModalTab('photo', this)">
+          <i class="fa-regular fa-image"></i> រូបភាព
+        </button>
+        <button class="modal-tab-btn" onclick="switchModalTab('password', this)">
+          <i class="fa-solid fa-lock"></i> លេខសម្ងាត់
+        </button>
+      </div>
+
+      <!-- Panel: Profile Info -->
+      <div class="modal-panel active" id="mpanel-profile">
+        <div class="modal-field">
+          <label><i class="fa-regular fa-user"></i> ឈ្មោះពេញ</label>
+          <input type="text" id="edit-fullname" placeholder="បញ្ចូលឈ្មោះពេញ"/>
+          <div class="field-error" id="err-fullname">សូមបញ្ចូលឈ្មោះ</div>
+        </div>
+        <div class="modal-field">
+          <label><i class="fa-solid fa-at"></i> Username</label>
+          <input type="text" id="edit-username" placeholder="username (គ្មានដកឃ្លា)"/>
+          <div class="field-hint">អ្នកដទៃអាចស្វែងរកអ្នកដោយ username</div>
+          <div class="field-error" id="err-username">Username មិនត្រឹមត្រូវ (អក្សរ, លេខ, _)</div>
+        </div>
+        <button class="modal-save-btn" id="save-profile-btn" onclick="saveProfile()">
+          <i class="fa-solid fa-floppy-disk"></i> រក្សាទុកព័ត៌មាន
+        </button>
+      </div>
+
+      <!-- Panel: Photo -->
+      <div class="modal-panel" id="mpanel-photo">
+        <div class="modal-field">
+          <label><i class="fa-solid fa-link"></i> URL រូបភាព</label>
+          <input type="url" id="edit-img" placeholder="https://example.com/photo.jpg" oninput="previewAvatar(this.value)"/>
+          <div class="field-hint">បញ្ចូល URL ឬ ជ្រើសរើសពីឧបករណ៍</div>
+        </div>
+
+        <hr class="modal-divider"/>
+
+        <div class="modal-field">
+          <label><i class="fa-solid fa-upload"></i> ឬ រើសឯកសារ</label>
+          <div class="img-upload-area" id="upload-drop-area">
+            <input type="file" id="edit-img-file" accept="image/*" onchange="handleFileUpload(this)"/>
+            <div class="img-upload-label">
+              <i class="fa-solid fa-cloud-arrow-up" style="font-size:1.4rem;color:var(--green-main);"></i>
+              <span>ចុចដើម្បីជ្រើសរូបភាព <br><small style="color:#aaa;">(JPG, PNG, WEBP — ≤ 5MB)</small></span>
+            </div>
+          </div>
+          <div class="field-hint" id="upload-status"></div>
+        </div>
+
+        <button class="modal-save-btn" id="save-photo-btn" onclick="savePhoto()">
+          <i class="fa-solid fa-floppy-disk"></i> រក្សាទុករូបភាព
+        </button>
+      </div>
+
+      <!-- Panel: Password -->
+      <div class="modal-panel" id="mpanel-password">
+
+        <!-- Debug notice shown only when endpoint probing fails -->
+        <div class="api-debug-notice" id="pwd-api-notice"></div>
+
+        <div class="modal-field">
+          <label><i class="fa-solid fa-lock"></i> លេខសម្ងាត់បច្ចុប្បន្ន</label>
+          <div class="pwd-wrap">
+            <input type="password" id="edit-current-pwd" placeholder="••••••••" autocomplete="current-password"/>
+            <button type="button" class="pwd-toggle" onclick="togglePwd('edit-current-pwd', this)">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <div class="field-error" id="err-current-pwd">សូមបញ្ចូលលេខសម្ងាត់បច្ចុប្បន្ន</div>
+        </div>
+
+        <hr class="modal-divider"/>
+
+        <div class="modal-field">
+          <label><i class="fa-solid fa-key"></i> លេខសម្ងាត់ថ្មី</label>
+          <div class="pwd-wrap">
+            <input type="password" id="edit-new-pwd" placeholder="••••••••" autocomplete="new-password" oninput="checkPwdStrength(this.value)"/>
+            <button type="button" class="pwd-toggle" onclick="togglePwd('edit-new-pwd', this)">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <div class="pwd-strength-bar"><div class="pwd-strength-fill" id="pwd-strength-fill"></div></div>
+          <div class="pwd-strength-label" id="pwd-strength-label"></div>
+          <div class="field-error" id="err-new-pwd">លេខសម្ងាត់ត្រូវតែយ៉ាងហោចណាស់ 8 តួ</div>
+        </div>
+
+        <div class="modal-field">
+          <label><i class="fa-solid fa-shield-check"></i> បញ្ជាក់លេខសម្ងាត់ថ្មី</label>
+          <div class="pwd-wrap">
+            <input type="password" id="edit-confirm-pwd" placeholder="••••••••" autocomplete="new-password" oninput="checkPwdMatch()"/>
+            <button type="button" class="pwd-toggle" onclick="togglePwd('edit-confirm-pwd', this)">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <div class="field-error" id="err-confirm-pwd">លេខសម្ងាត់មិនដូចគ្នា</div>
+        </div>
+
+        <button class="modal-save-btn" id="save-pwd-btn" onclick="savePassword()">
+          <i class="fa-solid fa-shield-check"></i> ផ្លាស់ប្តូរលេខសម្ងាត់
+        </button>
+
+        <p style="font-size:0.8rem;color:var(--text-light);text-align:center;margin-top:10px;">
+          <i class="fa-solid fa-circle-info"></i> បន្ទាប់ពីផ្លាស់ប្តូរ អ្នកនឹងត្រូវចូលម្ដងទៀត
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/src/services/api.js"></script>
+  <script src="/src/components/Navbar.js"></script>
+  <script>
+    const FOOD_FB = ['https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80','https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80','https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&q=80'];
+    const REST_FB = ['https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=80','https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&q=80'];
+
+    let currentUser = null;
+    let _favSub = 'foods';
+
+    if (!Auth.isLoggedIn()) window.location.href = '/src/pages/Login_Page/login.html';
+
+    function goodImg(url, fb) { return (!url||url==='string'||url==='null'||url.includes('example.com')) ? fb[Math.floor(Math.random()*fb.length)] : url; }
+    function stars(r) { const f=Math.round(r||0); return '★'.repeat(Math.min(5,f))+'☆'.repeat(Math.max(0,5-f)); }
+    function trunc(s,n) { s=s||''; return s.length>n ? s.slice(0,n)+'…' : s; }
+    function fmtDate(d) { return new Date(d).toLocaleDateString('en-GB',{year:'numeric',month:'short',day:'numeric'}); }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        currentUser = await AuthAPI.me();
+        Auth.setUser(currentUser);
+        renderProfile(currentUser);
+        loadStats();
+        loadPosts();
+      } catch(e) { Auth.logout(); }
+    });
+
+    /* ── Render profile ── */
+    function renderProfile(u) {
+      const name   = u.full_name || 'User';
+      const letter = name.charAt(0).toUpperCase();
+      const avatarEl = document.getElementById('profile-avatar');
+      if (u.profile_image) {
+        avatarEl.innerHTML = `<img src="${u.profile_image}" alt="${name}" onerror="this.style.display='none';this.parentElement.textContent='${letter}'">`;
+      } else {
+        avatarEl.textContent = letter;
+      }
+      document.getElementById('profile-name').textContent     = name;
+      document.getElementById('profile-username').textContent  = '@' + (u.username || '');
+      document.getElementById('profile-role').innerHTML        = u.role === 'admin'
+        ? '<i class="fa-solid fa-shield" style="color:var(--gold);"></i> Admin'
+        : '<i class="fa-solid fa-user"></i> Member';
+      document.getElementById('info-fullname').textContent = u.full_name  || '—';
+      document.getElementById('info-username').textContent  = '@' + (u.username || '—');
+      document.getElementById('info-email').textContent     = u.email     || '—';
+      document.getElementById('info-joined').textContent    = u.created_at ? fmtDate(u.created_at) : '—';
+      document.getElementById('info-role').textContent      = u.role === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'សមាជិក';
+
+      // Populate edit fields
+      document.getElementById('edit-fullname').value = u.full_name || '';
+      document.getElementById('edit-username').value = u.username  || '';
+      document.getElementById('edit-img').value      = u.profile_image || '';
+
+      // Modal preview
+      document.getElementById('modal-preview-name').textContent     = name;
+      document.getElementById('modal-preview-username').textContent  = '@' + (u.username || '');
+      previewAvatar(u.profile_image || '');
+    }
+
+    /* ── Avatar preview ── */
+    function previewAvatar(url) {
+      const preview = document.getElementById('modal-avatar-preview');
+      const letter  = (currentUser?.full_name || 'U').charAt(0).toUpperCase();
+      if (url && url.startsWith('http')) {
+        preview.innerHTML = `<img src="${url}" onerror="this.style.display='none';this.parentElement.textContent='${letter}'">`;
+      } else {
+        preview.textContent = letter;
+      }
+    }
+
+    /* ── Stats ── */
+    async function loadStats() {
+      const [posts, favFoods, favRest] = await Promise.allSettled([
+        FoodPostsAPI.byUser(currentUser.id, 0, 100),
+        FavoritesAPI.getFoods(0, 100),
+        FavoritesAPI.getRestaurants(0, 100),
+      ]);
+      document.getElementById('stat-posts').textContent     = posts.status    === 'fulfilled' ? (posts.value?.length    || 0) : 0;
+      document.getElementById('stat-fav-foods').textContent = favFoods.status === 'fulfilled' ? (favFoods.value?.length || 0) : 0;
+      document.getElementById('stat-fav-rest').textContent  = favRest.status  === 'fulfilled' ? (favRest.value?.length  || 0) : 0;
+    }
+
+    /* ════ CARD BUILDERS ════ */
+    function buildPostCard(p) {
+      const img = goodImg(p.image_url, FOOD_FB);
+      const url = `/src/pages/Product_details/detail.html?type=post&id=${p.id}`;
+      const dc  = { easy:'var(--green-main)', medium:'var(--gold)', hard:'#ef4444' };
+      const dl  = { easy:'ងាយ', medium:'មធ្យម', hard:'លំបាក' };
+      const d   = p.difficulty_level || '';
+      const safeTitle = (p.title||'').replace(/'/g,'').replace(/"/g,'');
+      return `<div class="food-card" onclick="location.href='${url}'" style="cursor:pointer;">
+        <div class="card-actions">
+          <button class="card-act-btn card-act-del"
+            onclick="event.stopPropagation();confirmDeletePost('${p.id}','${safeTitle}')"
+            title="លុប">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+        <div class="food-card-img">
+          <img src="${img}" onerror="this.src='${FOOD_FB[0]}'"/>
+          ${d ? `<span style="position:absolute;top:7px;left:7px;background:${dc[d]};color:white;font-size:1.125rem;font-weight:700;padding:2px 7px;border-radius:20px;">${dl[d]}</span>` : ''}
+          ${(p.tags||[]).length ? `<span style="position:absolute;top:7px;right:42px;background:rgba(0,0,0,0.5);color:white;font-size:1.125rem;padding:2px 6px;border-radius:20px;">${p.tags[0]}</span>` : ''}
+        </div>
+        <div class="food-card-body">
+          <div class="food-card-title">${p.title||'—'}</div>
+          <div class="food-card-desc">${trunc(p.description,68)}</div>
+          <div class="food-card-footer">
+            <span class="food-card-views"><i class="fa-regular fa-heart" style="color:#ef4444;"></i> ${p.likes_count||0}${p.cooking_time_minutes?` · <i class="fa-regular fa-clock"></i> ${p.cooking_time_minutes}នាទី`:''}</span>
+            <button class="food-card-btn" onclick="event.stopPropagation();location.href='${url}'">មើល</button>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function buildFavFoodCard(f) {
+      const img = goodImg(f.image_url, FOOD_FB);
+      const url = `/src/pages/Product_details/detail.html?type=food&id=${f.id}`;
+      return `<div class="food-card" onclick="location.href='${url}'" style="cursor:pointer;">
+        <div class="card-actions">
+          <button class="card-act-btn card-act-fav faved"
+            onclick="event.stopPropagation();removeFavFood('${f.id}')"
+            title="ដកចេញពីចូលចិត្ត">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+        </div>
+        <div class="food-card-img">
+          <img src="${img}" onerror="this.src='${FOOD_FB[0]}'"/>
+          ${f.is_trending ? `<span style="position:absolute;top:7px;left:7px;background:linear-gradient(135deg,#ef4444,#f59e0b);color:white;font-size:1.125rem;font-weight:700;padding:2px 7px;border-radius:20px;">ពេញ</span>` : ''}
+          ${f.price ? `<span style="position:absolute;bottom:7px;right:7px;background:var(--green-main);color:white;font-size:1.125rem;font-weight:700;padding:2px 7px;border-radius:20px;">$${parseFloat(f.price).toFixed(2)}</span>` : ''}
+        </div>
+        <div class="food-card-body">
+          <div class="food-card-title">${f.name||'—'}</div>
+          <div class="food-card-desc">${trunc(f.description,68)}</div>
+          <div class="food-card-footer">
+            <span class="food-stars">${stars(f.average_rating)}</span>
+            <button class="food-card-btn" onclick="event.stopPropagation();location.href='${url}'">មើល</button>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function buildFavRestCard(r) {
+      const img     = goodImg(r.image_url, REST_FB);
+      const url     = `/src/pages/Product_details/detail.html?type=restaurant&id=${r.id}`;
+      const cuisine = (r.cuisine_types||[]).filter(c=>c&&c!=='string').slice(0,2).join(', ') || 'ម្ហូប';
+      const price   = (r.price_range && r.price_range !== 'string') ? r.price_range : '';
+      return `<div class="food-card" onclick="location.href='${url}'" style="cursor:pointer;">
+        <div class="card-actions">
+          <button class="card-act-btn card-act-fav faved"
+            onclick="event.stopPropagation();removeFavRest('${r.id}')"
+            title="ដកចេញពីចូលចិត្ត">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+        </div>
+        <div class="food-card-img">
+          <img src="${img}" onerror="this.src='${REST_FB[0]}'"/>
+          ${r.is_trending ? `<span style="position:absolute;top:7px;left:7px;background:linear-gradient(135deg,#ef4444,#f59e0b);color:white;font-size:1.125rem;font-weight:700;padding:2px 7px;border-radius:20px;">ពេញ</span>` : ''}
+          ${price ? `<span style="position:absolute;bottom:7px;right:7px;background:var(--green-dark);color:white;font-size:1.125rem;font-weight:700;padding:2px 7px;border-radius:20px;">${price}</span>` : ''}
+        </div>
+        <div class="food-card-body">
+          <div class="food-card-title">${r.name||'—'}</div>
+          <div class="food-card-desc">${cuisine}</div>
+          <div class="food-card-footer">
+            <span class="food-stars">${stars(r.average_rating)} <span style="font-size:1.125rem;color:var(--text-light);">(${r.rating_count||0})</span></span>
+            <button class="food-card-btn" onclick="event.stopPropagation();location.href='${url}'">មើល</button>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    /* POSTS TAB */
+    async function loadPosts() {
+      const grid = document.getElementById('posts-grid');
+      grid.innerHTML = Array(4).fill('<div class="skeleton-card" style="height:220px;"></div>').join('');
+      try {
+        const posts = await FoodPostsAPI.byUser(currentUser.id, 0, 50);
+        if (!posts || !posts.length) {
+          grid.innerHTML = `<div class="panel-empty"><div class="empty-icon"></div><p>អ្នកមិនទាន់បានចែករំលែករូបមន្តណាមួយ</p></div>`;
+          return;
+        }
+        grid.innerHTML = posts.map(buildPostCard).join('');
+      } catch(e) {
+        grid.innerHTML = `<div class="panel-empty"><p>មិនអាចផ្ទុក: ${e.message}</p></div>`;
+      }
+    }
+
+    /* FAVORITES TAB */
+    async function loadFavorites() {
+      switchFavSub(_favSub, document.getElementById(`fsub-${_favSub}`));
+    }
+
+    async function switchFavSub(sub, btn) {
+      _favSub = sub;
+      document.querySelectorAll('.fav-sub-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const grid = document.getElementById('fav-grid');
+      grid.innerHTML = Array(4).fill('<div class="skeleton-card" style="height:220px;"></div>').join('');
+      try {
+        if (sub === 'foods') {
+          const favs = await FavoritesAPI.getFoods(0, 50);
+          if (!favs || !favs.length) { grid.innerHTML = `<div class="panel-empty"><div class="empty-icon"></div><p>អ្នកមិនទាន់មានម្ហូបដែលចូលចិត្ត</p></div>`; return; }
+          const details = await Promise.allSettled(favs.map(f => FoodItemsAPI.get(f.food_item_id || f.id)));
+          const items = details.filter(d => d.status === 'fulfilled').map(d => d.value);
+          grid.innerHTML = items.length ? items.map(buildFavFoodCard).join('') : `<div class="panel-empty"><p>រកមិនឃើញ</p></div>`;
+        } else {
+          const favs = await FavoritesAPI.getRestaurants(0, 50);
+          if (!favs || !favs.length) { grid.innerHTML = `<div class="panel-empty"><div class="empty-icon"><i class="fa-solid fa-shop"></i></div><p>អ្នកមិនទាន់មានភោជនីយដ្ឋានដែលចូលចិត្ត</p></div>`; return; }
+          const details = await Promise.allSettled(favs.map(r => RestaurantsAPI.get(r.restaurant_id || r.id)));
+          const items = details.filter(d => d.status === 'fulfilled').map(d => d.value);
+          grid.innerHTML = items.length ? items.map(buildFavRestCard).join('') : `<div class="panel-empty"><p>រកមិនឃើញ</p></div>`;
+        }
+      } catch(e) {
+        grid.innerHTML = `<div class="panel-empty"><p>មិនអាចផ្ទុក: ${e.message}</p></div>`;
+      }
+    }
+
+    async function removeFavFood(foodId) {
+      try { await FavoritesAPI.removeFood(foodId); showToast('បានដកចេញពីបញ្ជីចូលចិត្ត', 'info'); switchFavSub('foods', document.getElementById('fsub-foods')); loadStats(); }
+      catch(e) { showToast(e.message || 'មានបញ្ហា', 'error'); }
+    }
+    async function removeFavRest(restId) {
+      try { await FavoritesAPI.removeRestaurant(restId); showToast('បានដកចេញពីបញ្ជីចូលចិត្ត', 'info'); switchFavSub('restaurants', document.getElementById('fsub-restaurants')); loadStats(); }
+      catch(e) { showToast(e.message || 'មានបញ្ហា', 'error'); }
+    }
+
+    /* DELETE POST */
+    function confirmDeletePost(id, title) {
+      document.getElementById('confirm-title').textContent = `លុបរូបមន្ត "${title}"?`;
+      document.getElementById('btn-do-delete').onclick = () => doDeletePost(id);
+      document.getElementById('confirm-modal').classList.add('open');
+    }
+    function closeConfirm() { document.getElementById('confirm-modal').classList.remove('open'); }
+    document.getElementById('confirm-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeConfirm(); });
+
+    async function doDeletePost(id) {
+      const btn = document.getElementById('btn-do-delete');
+      btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> លុប…';
+      try {
+        await FoodPostsAPI.delete(id);
+        showToast('បានលុបរូបមន្ត', 'success');
+        closeConfirm(); loadPosts(); loadStats();
+      } catch(e) { showToast(e.message || 'លុបមិនបាន', 'error'); }
+      finally { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-trash"></i> លុប'; }
+    }
+
+    /* TAB SWITCH */
+    function switchTab(tab, btn) {
+      document.querySelectorAll('.profile-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.profile-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+      if (tab === 'favorites') loadFavorites();
+      if (tab === 'posts') loadPosts();
+    }
+
+    /* EDIT MODAL */
+    function openEditModal()  { document.getElementById('edit-modal').classList.add('open'); }
+    function closeEditModal() { document.getElementById('edit-modal').classList.remove('open'); clearPwdFields(); }
+    document.getElementById('edit-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeEditModal(); });
+
+    function switchModalTab(tab, btn) {
+      document.querySelectorAll('.modal-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.modal-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('mpanel-' + tab).classList.add('active');
+    }
+
+    function togglePwd(inputId, btn) {
+      const inp = document.getElementById(inputId);
+      const isHidden = inp.type === 'password';
+      inp.type = isHidden ? 'text' : 'password';
+      btn.innerHTML = isHidden ? '<i class="fa-regular fa-eye-slash"></i>' : '<i class="fa-regular fa-eye"></i>';
+    }
+
+    function checkPwdStrength(val) {
+      const fill  = document.getElementById('pwd-strength-fill');
+      const label = document.getElementById('pwd-strength-label');
+      if (!val) { fill.style.width = '0%'; label.textContent = ''; return; }
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+      const levels = [
+        { w:'20%', color:'#ef4444', text:'ខ្សោយ' },
+        { w:'45%', color:'#f59e0b', text:'មធ្យម' },
+        { w:'70%', color:'#3b82f6', text:'ល្អ' },
+        { w:'100%',color:'#22c55e', text:'ខ្លាំងណាស់ 💪' },
+      ];
+      const lv = levels[Math.min(score - 1, 3)] || levels[0];
+      fill.style.width = lv.w;
+      fill.style.background = lv.color;
+      label.textContent = lv.text;
+      label.style.color = lv.color;
+    }
+
+    function checkPwdMatch() {
+      const np = document.getElementById('edit-new-pwd').value;
+      const cp = document.getElementById('edit-confirm-pwd').value;
+      const err = document.getElementById('err-confirm-pwd');
+      if (cp && np !== cp) {
+        err.style.display = 'block';
+        document.getElementById('edit-confirm-pwd').classList.add('input-error');
+      } else {
+        err.style.display = 'none';
+        document.getElementById('edit-confirm-pwd').classList.remove('input-error');
+      }
+    }
+
+    function showErr(id, show, msg) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.display = show ? 'block' : 'none';
+      if (msg) el.textContent = msg;
+    }
+
+    function clearPwdFields() {
+      ['edit-current-pwd','edit-new-pwd','edit-confirm-pwd'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.value = ''; el.type = 'password'; el.classList.remove('input-error'); }
+      });
+      document.getElementById('pwd-strength-fill').style.width = '0%';
+      document.getElementById('pwd-strength-label').textContent = '';
+      ['err-current-pwd','err-new-pwd','err-confirm-pwd'].forEach(id => showErr(id, false));
+      const notice = document.getElementById('pwd-api-notice');
+      if (notice) { notice.classList.remove('show'); notice.textContent = ''; }
+    }
+
+    /* ════ SAVE: Profile Info ════ */
+    async function saveProfile() {
+      const fullname = document.getElementById('edit-fullname').value.trim();
+      const username = document.getElementById('edit-username').value.trim();
+
+      let valid = true;
+      if (!fullname) { showErr('err-fullname', true); valid = false; }
+      else showErr('err-fullname', false);
+
+      if (!username || !/^[a-zA-Z0-9_]+$/.test(username)) { showErr('err-username', true); valid = false; }
+      else showErr('err-username', false);
+
+      if (!valid) return;
+
+      const btn = document.getElementById('save-profile-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> កំពុងរក្សាទុក…';
+
+      try {
+        const updated = await AuthAPI.updateProfile({ full_name: fullname, username });
+        currentUser = updated;
+        renderProfile(updated);
+        showToast('ព័ត៌មានត្រូវបានកែប្រែ ✓', 'success');
+      } catch(err) {
+        showToast(err.message || 'មានបញ្ហា', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> រក្សាទុកព័ត៌មាន';
+      }
+    }
+
+    /* ════ SAVE: Photo ════ */
+    async function savePhoto() {
+      const fileInput = document.getElementById('edit-img-file');
+      const urlInput  = document.getElementById('edit-img').value.trim();
+
+      const btn = document.getElementById('save-photo-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> កំពុងរក្សាទុក…';
+
+      try {
+        let imageUrl = urlInput;
+
+        if (fileInput.files && fileInput.files[0]) {
+          document.getElementById('upload-status').textContent = 'កំពុងផ្ទុករូបភាព…';
+          const result = await AuthAPI.uploadImage(fileInput.files[0], 'profile');
+          imageUrl = result.url || result.image_url || result.profile_image || '';
+          document.getElementById('upload-status').textContent = '';
+        }
+
+        if (!imageUrl) {
+          showToast('សូមបញ្ចូល URL ឬ ជ្រើសរូបភាព', 'error');
+          return;
+        }
+
+        const updated = await AuthAPI.updateProfile({ profile_image: imageUrl });
+        currentUser = updated;
+        renderProfile(updated);
+        previewAvatar(imageUrl);
+        showToast('រូបភាពត្រូវបានកែប្រែ ✓', 'success');
+        fileInput.value = '';
+      } catch(err) {
+        showToast(err.message || 'មានបញ្ហា', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> រក្សាទុករូបភាព';
+      }
+    }
+
+    function handleFileUpload(input) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('ឯកសារធំពេក (ច្រើនជាង 5MB)', 'error');
+        input.value = ''; return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        previewAvatar(e.target.result);
+        document.getElementById('upload-status').textContent = `✓ ${file.name}`;
+        document.getElementById('edit-img').value = '';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* ════ SAVE: Password ════
+     *
+     * The backend may use different field names or endpoints.
+     * We try multiple payload shapes and endpoints gracefully.
+     *
+     * Common FastAPI patterns:
+     *   PUT /auth/change-password  { current_password, new_password }
+     *   PUT /auth/password         { old_password, new_password }
+     *   POST /auth/change-password { current_password, new_password }
+     */
+    async function savePassword() {
+      const currentPwd = document.getElementById('edit-current-pwd').value;
+      const newPwd     = document.getElementById('edit-new-pwd').value;
+      const confirmPwd = document.getElementById('edit-confirm-pwd').value;
+
+      // Reset errors
+      ['err-current-pwd','err-new-pwd','err-confirm-pwd'].forEach(id => showErr(id, false));
+      ['edit-current-pwd','edit-new-pwd','edit-confirm-pwd'].forEach(id =>
+        document.getElementById(id).classList.remove('input-error'));
+
+      let valid = true;
+      if (!currentPwd) {
+        showErr('err-current-pwd', true, 'សូមបញ្ចូលលេខសម្ងាត់បច្ចុប្បន្ន');
+        document.getElementById('edit-current-pwd').classList.add('input-error');
+        valid = false;
+      }
+      if (!newPwd || newPwd.length < 8) {
+        showErr('err-new-pwd', true, 'លេខសម្ងាត់ត្រូវតែយ៉ាងហោចណាស់ 8 តួ');
+        document.getElementById('edit-new-pwd').classList.add('input-error');
+        valid = false;
+      }
+      if (newPwd !== confirmPwd) {
+        showErr('err-confirm-pwd', true, 'លេខសម្ងាត់មិនដូចគ្នា');
+        document.getElementById('edit-confirm-pwd').classList.add('input-error');
+        valid = false;
+      }
+      if (!valid) return;
+
+      const btn = document.getElementById('save-pwd-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> កំពុងផ្លាស់ប្តូរ…';
+
+      // We try two payload shapes: the API might use "current_password" or "old_password"
+      const payloads = [
+        { current_password: currentPwd, new_password: newPwd },
+        { old_password: currentPwd, new_password: newPwd },
+        { password: currentPwd, new_password: newPwd },
+      ];
+
+      // Endpoints to try in order
+      const endpoints = [
+        { method: 'PUT',  path: '/auth/change-password' },
+        { method: 'PUT',  path: '/auth/password' },
+        { method: 'POST', path: '/auth/change-password' },
+        { method: 'PUT',  path: '/auth/update-password' },
+      ];
+
+      const token = Auth.getToken();
+      let succeeded = false;
+      let lastErrMsg = '';
+
+      outer:
+      for (const ep of endpoints) {
+        for (const payload of payloads) {
+          try {
+            const res = await fetch(`https://sombobaeb.cheat.casa${ep.path}`, {
+              method: ep.method,
+              headers: {
+                'Content-Type': 'application/json',
+                ...(token ? { Authorization: `Bearer ${token}` } : {}),
+              },
+              body: JSON.stringify(payload),
+            });
+
+            // 404 means endpoint doesn't exist → try next
+            if (res.status === 404) break; // break inner loop, try next endpoint
+
+            const text = await res.text();
+            let data = null;
+            try { if (text) data = JSON.parse(text); } catch(_) {}
+
+            if (res.ok || res.status === 204) {
+              succeeded = true;
+              break outer;
+            }
+
+            // Wrong password / auth error → don't try other payload shapes, surface the error
+            if (res.status === 400 || res.status === 401 || res.status === 422) {
+              let msg = '';
+              if (Array.isArray(data?.detail)) {
+                msg = data.detail.map(e => e.msg || '').join(', ');
+              } else {
+                msg = data?.detail || data?.message || `Error ${res.status}`;
+              }
+              lastErrMsg = msg;
+
+              // 401/400 with "incorrect/wrong/invalid" = bad current password
+              const lower = msg.toLowerCase();
+              if (lower.includes('incorrect') || lower.includes('wrong') || lower.includes('invalid') || res.status === 401) {
+                showErr('err-current-pwd', true, 'លេខសម្ងាត់បច្ចុប្បន្នមិនត្រឹមត្រូវ');
+                document.getElementById('edit-current-pwd').classList.add('input-error');
+                break outer; // definitive answer, stop trying
+              }
+              // 422 = validation error, try next payload shape
+              if (res.status === 422) continue;
+
+              break outer; // other 4xx = surface the error
+            }
+          } catch (networkErr) {
+            lastErrMsg = networkErr.message;
+            // Network error on this endpoint → try next
+            break;
+          }
+        }
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-shield-check"></i> ផ្លាស់ប្តូរលេខសម្ងាត់';
+
+      if (succeeded) {
+        showToast('លេខសម្ងាត់ត្រូវបានផ្លាស់ប្តូរ — សូមចូលម្ដងទៀត', 'success');
+        clearPwdFields();
+        closeEditModal();
+        setTimeout(() => Auth.logout(), 2000);
+      } else {
+        const displayMsg = lastErrMsg || 'មិនអាចផ្លាស់ប្តូរលេខសម្ងាត់បាន';
+        showToast(displayMsg, 'error');
+        // If we never found any working endpoint, show a hint
+        if (!lastErrMsg || lastErrMsg.includes('404') || lastErrMsg.includes('Not Found')) {
+          const notice = document.getElementById('pwd-api-notice');
+          notice.textContent = '⚠️ Endpoint ផ្លាស់ប្តូរលេខសម្ងាត់មិនត្រូវបានរកឃើញ — សូមពិនិត្យ API backend';
+          notice.classList.add('show');
+        }
+      }
+    }
+
+    function handleLogout() {
+      if (confirm('តើអ្នកចង់ចេញពីគណនីមែនទេ?')) Auth.logout();
+    }
+  </script>
+</body>
+</html>

@@ -429,7 +429,7 @@
       .hours-row.today .hours-day { color: var(--green); font-weight: 700; }
       .hours-row.today .hours-time { color: var(--green-dark); font-weight: 700; }
 
-      /* ── RATING SUMMARY BAR ──────────────────────── */
+
       .rating-summary {
         display: flex;
         gap: 24px;
@@ -524,7 +524,7 @@
       .review-stars-display i { font-size: 1.125rem; }
       .review-text { font-size: 1.125rem; color: var(--ink-3); line-height: 1.8; }
 
-      /* ── REVIEW FORM ─────────────────────────────── */
+   
       .review-form {
         padding: 22px;
         background: var(--green-light);
@@ -716,6 +716,15 @@
         font-weight: 500;
       }
 
+
+/* AFTER */
+.info-row .lbl {
+  display: flex;
+  align-items: center;
+  gap: 5px;  /* ← to this */
+
+}
+
       .related-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -757,7 +766,7 @@
       }
       .error-icon { font-size: 3rem; opacity: 0.18; margin-bottom: 16px; }
 
-      /* ── KHMER TOAST ─────────────────────────────── */
+
       #khmer-toast {
         position: fixed;
         bottom: 24px;
@@ -958,9 +967,7 @@
             </div>
 
             <div class="sidebar-card" id="features-card" style="display:none">
-              <div class="sec-heading" style="margin-bottom:12px">
-                <i class="fa-solid fa-star"></i> គុណលក្ខណៈ
-              </div>
+              
               <div class="features-wrap" id="features-list"></div>
             </div>
 
@@ -1002,7 +1009,7 @@
     <script src="/src/components/Footer.js"></script>
 
     <script>
-      /* ── SAFE FALLBACKS ─────────────────────────── */
+    
       if (typeof Auth === 'undefined')           window.Auth           = { isLoggedIn:()=>false, isAdmin:()=>false, getUser:()=>null };
       if (typeof FoodPostsAPI === 'undefined')   window.FoodPostsAPI   = { get:async()=>({}), list:async()=>[] };
       if (typeof FoodItemsAPI === 'undefined')   window.FoodItemsAPI   = { get:async()=>({}), list:async()=>[], reviews:async()=>[] };
@@ -1010,7 +1017,7 @@
       if (typeof ReviewsAPI === 'undefined')     window.ReviewsAPI     = { create:async()=>({}) };
       if (typeof FavoritesAPI === 'undefined')   window.FavoritesAPI   = { addFood:async()=>{}, removeFood:async()=>{}, addRestaurant:async()=>{}, removeRestaurant:async()=>{} };
 
-      /* ── KHMER TOAST (replaces showToast) ────────── */
+
       const KHMER_MSGS = {
         success: '✓',
         error:   '✗',
@@ -1046,7 +1053,7 @@
       let selRating    = 0;
       let allFoodItems = [];
 
-      /* ── STAR LABEL MAP (Khmer) ──────────────────── */
+    
       const STAR_LABELS = ['','មិនល្អសោះ','គួរអោយអស់សំណើច','ធម្មតា','ល្អ','ល្អណាស់'];
 
       function _img(url, fb) {
@@ -1058,7 +1065,6 @@
         return d ? new Date(d).toLocaleDateString('km-KH',{year:'numeric',month:'short',day:'numeric'}) : '—';
       }
 
-      /* ── STAR HTML HELPERS ───────────────────────── */
       function starsHtml(rating, size='sm') {
         const r = parseFloat(rating) || 0;
         const fs = size === 'lg' ? '1.1rem' : '0.82rem';
@@ -1071,10 +1077,7 @@
         return h;
       }
 
-      /* ── RATING SUMMARY (uses API data) ────────────
-         API fields: review.rating (number 1-5), review.review_text, review.created_at
-         Average is computed client-side from the fetched reviews array.
-      ─────────────────────────────────────────────── */
+
       function renderRatingSummary(reviews) {
         const wrap = document.getElementById('rating-summary-wrap');
         if (!wrap) return;
@@ -1106,7 +1109,7 @@
           const pct = total ? Math.round(counts[n] / total * 100) : 0;
           return `<div class="rbar-row">
             <span class="lbl">${n}</span>
-            <i class="fa-solid fa-star" style="color:#f59e0b;font-size:1.125rem;flex-shrink:0;"></i>
+            <i class="fa-solid fa-star" style="color:#f59e0b;font-size:1.125rem;flex-shrink:0; gap:10px"></i>
             <div class="rbar-track"><div class="rbar-fill" style="width:${pct}%"></div></div>
             <span class="pct">${pct}%</span>
           </div>`;
@@ -1134,7 +1137,6 @@
         }
       }
 
-      /* ── INIT ───────────────────────────────────── */
       document.addEventListener('DOMContentLoaded', async () => {
         if (!ITEM_ID) { showError(); return; }
         try {
@@ -1154,7 +1156,7 @@
         }
       });
 
-      /* ── RENDER FUNCTIONS ───────────────────────── */
+   
       async function renderPost(p) {
         document.title = `${p.title} — ម្ហូប`;
         document.getElementById('d-img').src = _img(p.image_url, FOOD_FB);
@@ -1269,7 +1271,7 @@
         if (features.length) {
           document.getElementById('features-card').style.display = '';
           document.getElementById('features-list').innerHTML = features.map(f=>
-            `<span class="feature-tag"><i class="fa-solid fa-check" style="color:var(--green);font-size:1.125rem;"></i>${f}</span>`).join('');
+            `<span class="feature-tag"><i class="fa-solid fa-check" style="color:var(--green);font-size:1.125rem; gap:10px;"></i>${f}</span>`).join('');
         }
 
         const hours = r.opening_hours || {};
@@ -1369,11 +1371,6 @@
         renderRestFoods(cat ? allFoodItems.filter(f=>f.category===cat) : allFoodItems);
       }
 
-      /* ── LOAD REVIEWS (matched to API) ──────────────
-         API returns array of objects:
-           { id, user_id, rating, review_text, created_at, food_item_id?, restaurant_id? }
-         We compute average locally from the returned reviews.
-      ─────────────────────────────────────────────── */
       async function loadReviews() {
         const list = document.getElementById('reviews-list');
         const card = document.getElementById('reviews-card');
@@ -1428,7 +1425,6 @@
         }
       }
 
-      /* ── REVIEW FORM ─────────────────────────────── */
       function renderReviewForm() {
         const wrap = document.getElementById('review-form-wrap');
         if (TYPE==='post') { wrap.innerHTML=''; return; }
@@ -1506,11 +1502,6 @@
         if (len > 500) ta.value = ta.value.slice(0,500);
       }
 
-      /* ── SUBMIT REVIEW (matched to API body) ────────
-         POST /reviews with body:
-           { user_id, rating, review_text, food_item_id?, restaurant_id? }
-         The API requires user to be logged in (Bearer token via apiFetch).
-      ─────────────────────────────────────────────── */
       async function submitReview() {
         // Guard: must select stars
         if (!selRating) {
@@ -1595,7 +1586,7 @@
         } catch(e) { document.getElementById('related-grid').innerHTML=''; }
       }
 
-      /* ── FAVORITES ───────────────────────────────── */
+     
       async function toggleFav() {
         if (!Auth.isLoggedIn()) {
           showToast('សូមចូលគណនីដើម្បីរក្សាទុក!', 'info');
@@ -1642,13 +1633,13 @@
         }
       }
 
-      function buildInfoRows(rows) {
-        return rows.map(r=>`
-          <div class="info-row">
-            <span class="lbl"><i class="fa-solid ${r.i}"></i>${r.l}</span>
-            <span class="val">${r.v}</span>
-          </div>`).join('');
-      }
+function buildInfoRows(rows) {
+  return rows.map(r=>`
+    <div class="info-row">
+      <span class="lbl"><i class="fa-solid ${r.i}" style="width:16px;text-align:center;margin-right:10px;"></i>${r.l}</span>
+      <span class="val">${r.v}</span>
+    </div>`).join('');
+}
 
       function showError() {
         document.getElementById('error-state').style.display = '';

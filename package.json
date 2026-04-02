@@ -1,9 +1,10 @@
 {
   "dependencies": {
+    "@tailwindcss/cli": "^4.2.2",
     "bootstrap-icons": "^1.13.1",
-    "tailwind": "^4.0.0"
+    "tailwindcss": "^4.2.2"
   },
-  "scripts": {
-    "dev": "npx @tailwindcss/cli -i ./src/css/input.css -o ./src/css/output.css --watch"
-  }
+"scripts": {
+  "dev": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch"
+}
 }
